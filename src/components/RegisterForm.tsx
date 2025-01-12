@@ -56,7 +56,6 @@ export default function RegisterForm() {
 
 			toast.success("Cadastro realizado com sucesso!");
 			setTimeout(() => navigate("/login"), 300);
-
 		} catch (error: unknown) {
 			if (axios.isAxiosError(error)) {
 				const errorMessage =

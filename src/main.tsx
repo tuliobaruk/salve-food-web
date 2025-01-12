@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
 import { AuthProvider } from "@/context/AuthContext";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

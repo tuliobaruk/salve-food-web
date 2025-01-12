@@ -3,11 +3,14 @@ import * as z from "zod";
 // Schema de validação da página de registro
 export const RegisterSchema = z
 	.object({
-		name: z.string().min(5, {
-			message: "Por favor insira seu nome",
-		}).refine((name) => name.trim().split(" ").length >= 2, {
-			message: "Por favor, insira pelo menos um nome e um sobrenome",
-		}),
+		name: z
+			.string()
+			.min(5, {
+				message: "Por favor insira seu nome",
+			})
+			.refine((name) => name.trim().split(" ").length >= 2, {
+				message: "Por favor, insira pelo menos um nome e um sobrenome",
+			}),
 		email: z.string().email({
 			message: "Por favor insira um e-mail válido",
 		}),
