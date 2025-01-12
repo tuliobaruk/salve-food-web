@@ -1,8 +1,24 @@
 import { StrictMode } from "react";
-import { AuthProvider } from "./context/AuthContext";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import "./index.css";
+
+import { AuthProvider } from "@/context/AuthContext";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from "@/pages/HomePage";
+import NotFoundPage from "@/pages/NotFoundPage";
+import LoginPage from "@/pages/LoginPage";
+
+const router = createBrowserRouter([
+	{
+		path: "/",
+		element: <HomePage />,
+		errorElement: <NotFoundPage />,
+	},
+	{
+		path: "/login",
+		element: <LoginPage />,
+	},
+]);
 
 const rootElement = document.getElementById("root")!;
 if (rootElement) {
@@ -10,7 +26,7 @@ if (rootElement) {
 	root.render(
 		<StrictMode>
 			<AuthProvider>
-				<App />
+				<RouterProvider router={router} />
 			</AuthProvider>
 		</StrictMode>,
 	);
