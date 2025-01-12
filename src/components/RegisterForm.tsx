@@ -52,6 +52,7 @@ export default function RegisterForm() {
 				phoneNumber: values.phoneNumber,
 			};
 
+			// TODO: Extrair isso aqui para o authService novo
 			await axiosInstance.post("/api/auth/create", payload);
 
 			toast.success("Cadastro realizado com sucesso!");

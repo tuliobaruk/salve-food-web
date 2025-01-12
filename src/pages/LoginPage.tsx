@@ -1,6 +1,7 @@
 import { LoginForm } from "@/components/LoginForm";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function LoginPage() {
 	const { login } = useAuth();
@@ -11,6 +12,7 @@ export default function LoginPage() {
 		e.preventDefault();
 		try {
 			await login(email, password);
+			toast.success("Seja Bem vindo!");
 		} catch (error) {
 			console.error("Falha ao logar", error);
 		}
