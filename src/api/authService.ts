@@ -1,4 +1,4 @@
-import axios from "./axiosConfig";
+import axios from "@/api/axiosConfig";
 
 interface AuthResponse {
 	access_token: string;

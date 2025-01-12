@@ -22,8 +22,7 @@ const axiosInstance: AxiosInstance = axios.create({
 	baseURL: `http://${API_ENDPOINT_URL}`,
 	headers: {
 		"Content-Type": "application/json",
-	},
-	withCredentials: true,
+	}
 });
 
 axiosInstance.interceptors.response.use(

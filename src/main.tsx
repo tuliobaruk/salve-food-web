@@ -2,7 +2,9 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
+import { Toaster } from 'sonner';
 import { AuthProvider } from "@/context/AuthContext";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import NotFoundPage from "@/pages/NotFoundPage";
@@ -31,6 +33,7 @@ if (rootElement) {
 	root.render(
 		<StrictMode>
 			<AuthProvider>
+				<Toaster position="top-center" />
 				<RouterProvider router={router} />
 			</AuthProvider>
 		</StrictMode>,
