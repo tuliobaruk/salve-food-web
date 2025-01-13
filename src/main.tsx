@@ -10,6 +10,7 @@ import HomePage from "@/pages/HomePage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import LoginPage from "@/pages/LoginPage";
 import SingupPage from "@/pages/SingupPage";
+import TestPage from "@/pages/TestPage";
 
 const router = createBrowserRouter([
 	{
@@ -25,6 +26,11 @@ const router = createBrowserRouter([
 		path: "/singup",
 		element: <SingupPage />,
 	},
+	{
+		path: "/test",
+		element: <TestPage />,
+	},
+	// Rota Temporária, criei para testar a lógica de refresh dos tokens
 ]);
 
 const rootElement = document.getElementById("root")!;
@@ -32,8 +38,8 @@ if (rootElement) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<StrictMode>
+			<Toaster position="top-center" />
 			<AuthProvider>
-				<Toaster position="top-center" />
 				<RouterProvider router={router} />
 			</AuthProvider>
 		</StrictMode>,

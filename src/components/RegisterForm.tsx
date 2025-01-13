@@ -21,6 +21,7 @@ import { RegisterSchema } from "@/schema/zodSchemas";
 import { splitName } from "@/lib/utils";
 import axiosInstance from "@/api/axiosConfig";
 import axios from "axios";
+import { logout } from "@/api/authService";
 
 // Usando o schema que criei na pasta @/schema
 // Podemos usar o Zod para validar outros cadastros da applicação
@@ -52,7 +53,7 @@ export default function RegisterForm() {
 				phoneNumber: values.phoneNumber,
 			};
 
-			// TODO: Extrair isso aqui para o authService novo
+			logout();
 			await axiosInstance.post("/api/auth/create", payload);
 
 			toast.success("Cadastro realizado com sucesso!");
@@ -118,7 +119,7 @@ export default function RegisterForm() {
 									)}
 								/>
 
-								{/* Phone Field */}
+								{/* Campo de Telefone */}
 								<FormField
 									control={form.control}
 									name="phoneNumber"

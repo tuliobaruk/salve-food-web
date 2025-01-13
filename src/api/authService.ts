@@ -37,7 +37,7 @@ export const setSession = (accessToken: string | null, refreshToken: string | nu
 export const getStoredTokens = () => {
 	const accessToken = localStorage.getItem("access_token");
 	const refreshToken = localStorage.getItem("refresh_token");
-	return { accessToken, refreshToken };
+	return [ accessToken, refreshToken ];
 };
 
 export const logout = () => {

@@ -1,80 +1,57 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosRequestConfig, AxiosInstance } from "axios";
-import { refreshToken, setSession, getStoredTokens, logout } from "./authService";
+import axios, { AxiosInstance } from "axios";
+import { setSession, getStoredTokens, logout } from "@/api/authService";
 
 const API_ENDPOINT_URL = import.meta.env.VITE_APP_BACKEND_IP;
-let isRefreshing = false;
-let failedQueue: any[] = [];
-
-const processQueue = (error: any, token: string | null = null) => {
-	failedQueue.forEach((prom) => {
-		if (token) {
-			prom.resolve(token);
-		} else {
-			prom.reject(error);
-		}
-	});
-
-	failedQueue = [];
-};
+const BASE_URL = `http://${API_ENDPOINT_URL}`;
 
 const axiosInstance: AxiosInstance = axios.create({
-	baseURL: `http://${API_ENDPOINT_URL}`,
+	baseURL: BASE_URL,
 	headers: {
 		"Content-Type": "application/json",
 	},
 });
 
+axiosInstance.interceptors.request.use(
+	(request) => {
+		const [accessToken, refreshToken] = getStoredTokens();
+		if (accessToken) {
+			request.headers.Authorization = `Bearer ${accessToken}`;
+			setSession(accessToken, refreshToken);
+		}
+		return request;
+	},
+	(error) => {
+		return Promise.reject(error);
+	},
+);
+
 axiosInstance.interceptors.response.use(
 	(response) => response,
 	async (error) => {
-		const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
-
-		if (error.response?.status === 401 && !originalRequest._retry) {
-			const { refreshToken: storedRefreshToken } = getStoredTokens();
-
-			if (!storedRefreshToken) {
-				logout();
-				return Promise.reject(error);
-			}
-
-			if (isRefreshing) {
-				return new Promise(function (resolve, reject) {
-					failedQueue.push({ resolve, reject });
-				})
-					.then((token) => {
-						if (originalRequest.headers) {
-							originalRequest.headers["Authorization"] = `Bearer ${token}`;
-						}
-						return axiosInstance(originalRequest);
-					})
-					.catch((err) => Promise.reject(err));
-			}
-
+		const originalRequest = error.config;
+		if (error.response.status === 401 || error.response.status === 500 && !originalRequest._retry) {
 			originalRequest._retry = true;
-			isRefreshing = true;
-
 			try {
-				const newTokens = await refreshToken(storedRefreshToken);
+				const refreshToken = localStorage.getItem("refresh_token");
 
-				setSession(newTokens.access_token, newTokens.refresh_token);
-				processQueue(null, newTokens.access_token);
+				const response = await axios.post(`http://${API_ENDPOINT_URL}/api/auth/refresh`, {
+					refreshToken,
+				});
 
-				if (originalRequest.headers) {
-					delete originalRequest.headers["Authorization"];
-					originalRequest.headers["Authorization"] = `Bearer ${newTokens.access_token}`;
-				}
+				const { access_token, refresh_token: newRefreshToken } = response.data;
 
+				localStorage.setItem("access_token", access_token);
+				localStorage.setItem("refresh_token", newRefreshToken);
+
+				axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 				return axiosInstance(originalRequest);
-			} catch (err) {
-				processQueue(err, null);
+			} catch (refreshError) {
+				console.error("Falha ao utilizar refreshtoken:", refreshError);
 				logout();
-				return Promise.reject(err);
-			} finally {
-				isRefreshing = false;
+				window.location.href = "/login";
+				return Promise.reject(refreshError);
 			}
 		}
-
 		return Promise.reject(error);
 	},
 );
