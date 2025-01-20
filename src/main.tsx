@@ -12,6 +12,12 @@ import LoginPage from "@/pages/LoginPage";
 import SingupPage from "@/pages/SingupPage";
 import TestPage from "@/pages/TestPage";
 import Dashboard from "./pages/Dashboard";
+import Mapa from "./pages/Mapa";
+import Loja from "./pages/Loja";
+import Ajuda from "./pages/Ajuda";
+import Cardapio from "./pages/Cardapio";
+import Configuracoes from "./pages/Configuracoes";
+import Entregas from "./pages/Entregas";
 
 const router = createBrowserRouter([
 	{
@@ -31,10 +37,35 @@ const router = createBrowserRouter([
 		path: "/test",
 		element: <TestPage />,
 	},
+	
 	{
 		path: "/dashboard",
 		element: <Dashboard />,
 	},
+	{
+		path: "/mapa",
+		element: <Mapa />,
+	},
+	{
+		path: "/loja",
+		element: <Loja />,
+	},
+	{
+		path: "/ajuda",
+		element: <Ajuda />,
+	},
+	{
+		path: "/cardapio",
+		element: <Cardapio />,
+	},
+	{
+		path: "/configuracoes",
+		element: <Configuracoes />,
+	},
+	{
+		path: "entregas",
+		element: <Entregas />,
+	}
 	// Rota Temporária, criei para testar a lógica de refresh dos tokens
 ]);
 
