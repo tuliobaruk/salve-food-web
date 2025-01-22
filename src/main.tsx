@@ -13,6 +13,7 @@ import SingupPage from "@/pages/SingupPage";
 import TestPage from "@/pages/TestPage";
 import Dashboard from "./pages/Dashboard";
 import Layout from "./components/global_layout";
+import CreateStorePage from "@/pages/CreateStorePage";
 
 const router = createBrowserRouter([
 	{
