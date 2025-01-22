@@ -5,7 +5,6 @@ type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 
 export function createFormDataStoreRequest(
 	values: CreateStoreFormValues,
-	coordinates: { lat: number; lng: number },
 ): FormData {
 	const formData = new FormData();
 	formData.append("nome", values.nome);
@@ -16,8 +15,6 @@ export function createFormDataStoreRequest(
 	formData.append("numero", values.numero);
 	formData.append("cidade", values.cidade);
 	formData.append("estado", values.estado);
-	formData.append("latitude", coordinates.lat.toString());
-	formData.append("longitude", coordinates.lng.toString());
 
 	if (values.file instanceof File) {
 		formData.append("file", values.file);

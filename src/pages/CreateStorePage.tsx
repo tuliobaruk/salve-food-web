@@ -3,7 +3,6 @@ import CreateStoreForm from "@/components/CreateStoreForm";
 import useFetchSegmentos from "@/hooks/useFetchSegmentos";
 import { z } from "zod";
 import { CreateStoreSchema } from "@/schema/zodSchemas";
-import { fetchCoordinates } from "@/lib/fetchCoordinates";
 import axiosInstance from "@/api/axiosConfig";
 import { createFormDataStoreRequest } from "@/lib/createFormDataStoreRequest";
 
@@ -14,11 +13,7 @@ export default function CreateStorePage() {
 
 	async function handleSubmit(values: CreateStoreFormValues) {
 		try {
-			const { rua, bairro, cidade, estado } = values;
-			const address = `${rua}, ${bairro}, ${cidade}, ${estado}`;
-			const coordinates = await fetchCoordinates(address);
-
-			const formData = createFormDataStoreRequest(values, coordinates);
+			const formData = createFormDataStoreRequest(values);
 
 			const response = await axiosInstance.post("/api/loja", formData, {
 				headers: {
