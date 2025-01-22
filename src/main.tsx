@@ -11,7 +11,8 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import LoginPage from "@/pages/LoginPage";
 import SingupPage from "@/pages/SingupPage";
 import TestPage from "@/pages/TestPage";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "@/pages/Dashboard";
+import CreateStorePage from "@/pages/CreateStorePage";
 
 const router = createBrowserRouter([
 	{
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
 	{
 		path: "/dashboard",
 		element: <Dashboard />,
+	},
+	{
+		path: "/createStore",
+		element: <CreateStorePage />,
 	},
 	// Rota Temporária, criei para testar a lógica de refresh dos tokens
 ]);
