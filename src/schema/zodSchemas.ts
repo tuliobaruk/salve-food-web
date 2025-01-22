@@ -44,5 +44,11 @@ export const CreateStoreSchema = z.object({
 	numero: z.string().min(1, { message: "O número é obrigatório." }),
 	cidade: z.string().min(1, { message: "A cidade é obrigatória." }),
 	estado: z.string().min(1, { message: "O estado é obrigatório." }),
-	file: z.instanceof(File).nullable().optional(),
+	file: z
+		.instanceof(File)
+		.nullable()
+		.optional()
+		.refine((file) => !file || ["image/jpeg", "image/png"].includes(file.type), {
+			message: "O arquivo deve ser uma imagem (JPG ou PNG)",
+		}),
 });
