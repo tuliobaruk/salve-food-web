@@ -37,6 +37,10 @@ const router = createBrowserRouter([
 		path: "/dashboard",
 		element: <Dashboard />,
 	},
+	{
+		path: "/createStore",
+		element: <CreateStorePage />,
+	},
 	// Rota Temporária, criei para testar a lógica de refresh dos tokens
 ]);
 
