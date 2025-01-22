@@ -69,6 +69,7 @@ const estados: Record<string, string> = {
 
 export default function CreateStoreForm({ segmentos, loading, onSubmit }: CreateStoreFormProps) {
 	const [files, setFiles] = useState<File[] | null>(null);
+	const [cep, setCep] = useState<string>("");
 
 	const dropZoneConfig = {
 		maxFiles: 1,
@@ -82,6 +83,28 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 			form.setValue("file", uploadedFiles[0]);
 		} else {
 			form.setValue("file", null);
+		}
+	};
+
+	const handleCepSearch = async () => {
+		if (cep.length === 8) {
+			try {
+				const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+				const data = await response.json();
+				if (data.cep) {
+					form.setValue("rua", data.logradouro || "");
+					form.setValue("bairro", data.bairro || "");
+					form.setValue("cidade", data.localidade || "");
+					form.setValue("estado", data.uf || "");
+				} else {
+					alert("CEP não encontrado.");
+				}
+			} catch (error) {
+				console.log("Erro ao buscar o CEP.");
+				console.error(error);
+			}
+		} else {
+			alert("Digite um CEP válido.");
 		}
 	};
 
@@ -201,6 +224,32 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 						</FormItem>
 					)}
 				/>
+				<FormField
+					control={form.control}
+					// @ts-expect-error: Não quero enviar CEP na requisição só está aqui para auxiliar o preenchimento
+					name="cep"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>CEP</FormLabel>
+							<FormControl>
+								{/* @ts-expect-error: Não quero enviar CEP na requisição só está aqui para auxiliar o preenchimento */}
+								<Input
+									placeholder="Digite o CEP"
+									type="text"
+									{...field}
+									onChange={(e) => {
+										field.onChange(e);
+										setCep(e.target.value);
+									}}
+								/>
+							</FormControl>
+							<Button type="button" onClick={handleCepSearch} className="mt-4">
+								Buscar CEP
+							</Button>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
 				<FormField
 					control={form.control}
@@ -274,15 +323,15 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Estado</FormLabel>
-									<Select onValueChange={field.onChange} defaultValue={field.value}>
+									<Select value={field.value || ""} onValueChange={field.onChange}>
 										<FormControl>
 											<SelectTrigger>
-												<SelectValue placeholder="Estado" />
+												<SelectValue placeholder="Selecione o estado" />
 											</SelectTrigger>
 										</FormControl>
 										<SelectContent>
 											{Object.entries(estados).map(([codigo, nome]) => (
-												<SelectItem key={codigo} value={nome}>
+												<SelectItem key={codigo} value={codigo}>
 													{nome}
 												</SelectItem>
 											))}
@@ -295,7 +344,7 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 					</div>
 				</div>
 
-				<Button type="submit">Submit</Button>
+				<Button type="submit">Enviar</Button>
 			</form>
 		</Form>
 	);
