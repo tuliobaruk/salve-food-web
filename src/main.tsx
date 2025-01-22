@@ -12,8 +12,9 @@ import LoginPage from "@/pages/LoginPage";
 import SingupPage from "@/pages/SingupPage";
 import TestPage from "@/pages/TestPage";
 import Dashboard from "./pages/Dashboard";
-import Layout from "./components/global_layout";
+import Layout from "@/components/global_layout";
 import CreateStorePage from "@/pages/CreateStorePage";
+import Pedidos from "@/pages/PedidosPage";
 
 const router = createBrowserRouter([
 	{
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
 	{
 		path: "/dashboard",
 		element: <Dashboard />,
+	},
+	{
+		path: "/pedidos",
+		element: <Pedidos />,
 	},
 	{
 		path: "/createStore",
