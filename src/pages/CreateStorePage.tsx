@@ -3,24 +3,34 @@ import CreateStoreForm from "@/components/CreateStoreForm";
 import useFetchSegmentos from "@/hooks/useFetchSegmentos";
 import { z } from "zod";
 import { CreateStoreSchema } from "@/schema/zodSchemas";
+import { fetchCoordinates } from "@/lib/fetchCoordinates";
+import axiosInstance from "@/api/axiosConfig";
+import { createFormDataStoreRequest } from "@/lib/createFormDataStoreRequest";
 
 type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 
 export default function CreateStorePage() {
 	const { segmentos, loading } = useFetchSegmentos();
 
-	function handleSubmit(values: CreateStoreFormValues) {
+	async function handleSubmit(values: CreateStoreFormValues) {
 		try {
-			// Placeholder por enquanto vou substituir quando implementar a lógica de latitude longitude
-			console.log(values);
-			toast(
-				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-					<code className="text-white">{JSON.stringify(values, null, 2)}</code>
-				</pre>,
-			);
+			const { rua, bairro, cidade, estado } = values;
+			const address = `${rua}, ${bairro}, ${cidade}, ${estado}`;
+			const coordinates = await fetchCoordinates(address);
+
+			const formData = createFormDataStoreRequest(values, coordinates);
+
+			const response = await axiosInstance.post("/api/loja", formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			});
+
+			toast.success("Loja criada com sucesso!");
+			console.log("Resposta da API:", response.data);
 		} catch (error) {
-			console.error("Erro ao submeter o form", error);
 			toast.error("Falha ao submeter o form, erro detalhado no console.");
+			console.error("Erro ao submeter o form", error);
 		}
 	}
 
