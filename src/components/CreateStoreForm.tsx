@@ -73,7 +73,16 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 	const dropZoneConfig = {
 		maxFiles: 1,
 		maxSize: 1024 * 1024 * 4,
-		multiple: true,
+		multiple: false,
+	};
+
+	const handleFileChange = (uploadedFiles: File[] | null) => {
+		setFiles(uploadedFiles);
+		if (uploadedFiles && uploadedFiles[0]) {
+			form.setValue("file", uploadedFiles[0]);
+		} else {
+			form.setValue("file", null);
+		}
 	};
 
 	const form = useForm<CreateStoreFormValues>({
@@ -153,24 +162,13 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 				<FormField
 					control={form.control}
 					name="file"
-					// eslint-disable-next-line @typescript-eslint/no-unused-vars
-					render={({ field }) => (
+					render={() => (
 						<FormItem>
 							<FormLabel>Imagem</FormLabel>
 							<FormControl>
 								<FileUploader
 									value={files}
-									// TODO - Realmente enviar a imagem
-									// onValueChange={(uploadedFiles) => {
-									// 	if (uploadedFiles && uploadedFiles[0]) {
-									// 		setFiles(uploadedFiles);
-									// 		form.setValue("file", uploadedFiles[0]);
-									// 	} else {
-									// 		setFiles(null);
-									// 		form.setValue("file", null);
-									// 	}
-									// }}
-									onValueChange={setFiles}
+									onValueChange={handleFileChange}
 									dropzoneOptions={dropZoneConfig}
 									className="relative bg-background rounded-lg p-2"
 								>
