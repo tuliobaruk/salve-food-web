@@ -44,4 +44,5 @@ export const CreateStoreSchema = z.object({
 	numero: z.string().min(1, { message: "O número é obrigatório." }),
 	cidade: z.string().min(1, { message: "A cidade é obrigatória." }),
 	estado: z.string().min(1, { message: "O estado é obrigatório." }),
+	file: z.instanceof(File).nullable().optional(),
 });

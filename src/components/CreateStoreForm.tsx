@@ -19,7 +19,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { CloudUpload, Paperclip } from "lucide-react";
+import {
+	FileInput,
+	FileUploader,
+	FileUploaderContent,
+	FileUploaderItem,
+} from "@/components/ui/file-upload";
 import { CreateStoreSchema } from "@/schema/zodSchemas";
+import { useState } from "react";
 
 type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 
@@ -60,6 +68,14 @@ const estados: Record<string, string> = {
 };
 
 export default function CreateStoreForm({ segmentos, loading, onSubmit }: CreateStoreFormProps) {
+	const [files, setFiles] = useState<File[] | null>(null);
+
+	const dropZoneConfig = {
+		maxFiles: 1,
+		maxSize: 1024 * 1024 * 4,
+		multiple: true,
+	};
+
 	const form = useForm<CreateStoreFormValues>({
 		resolver: zodResolver(CreateStoreSchema),
 		defaultValues: {
@@ -129,6 +145,60 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 								</SelectContent>
 							</Select>
 							<FormDescription>Segmento onde a loja mais se encaixa</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<FormField
+					control={form.control}
+					name="file"
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Imagem</FormLabel>
+							<FormControl>
+								<FileUploader
+									value={files}
+									// TODO - Realmente enviar a imagem
+									// onValueChange={(uploadedFiles) => {
+									// 	if (uploadedFiles && uploadedFiles[0]) {
+									// 		setFiles(uploadedFiles);
+									// 		form.setValue("file", uploadedFiles[0]);
+									// 	} else {
+									// 		setFiles(null);
+									// 		form.setValue("file", null);
+									// 	}
+									// }}
+									onValueChange={setFiles}
+									dropzoneOptions={dropZoneConfig}
+									className="relative bg-background rounded-lg p-2"
+								>
+									<FileInput id="fileInput" className="outline-dashed outline-1 outline-slate-500">
+										<div className="flex items-center justify-center flex-col p-8 w-full ">
+											<CloudUpload className="text-gray-500 w-10 h-10" />
+											<p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+												<span className="font-semibold">Clique para fazer upload</span>
+												&nbsp; ou araste uma imagem
+											</p>
+											<p className="text-xs text-gray-500 dark:text-gray-400">
+												SVG, PNG, JPG ou GIF
+											</p>
+										</div>
+									</FileInput>
+									<FileUploaderContent>
+										{files &&
+											files.length > 0 &&
+											files.map((file, i) => (
+												<FileUploaderItem key={i} index={i}>
+													<Paperclip className="h-4 w-4 stroke-current" />
+													<span>{file.name}</span>
+												</FileUploaderItem>
+											))}
+									</FileUploaderContent>
+								</FileUploader>
+							</FormControl>
+							<FormDescription>Uma Imagem para sua loja</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
