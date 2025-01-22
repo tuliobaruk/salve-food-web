@@ -3,9 +3,7 @@ import { CreateStoreSchema } from "@/schema/zodSchemas";
 
 type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 
-export function createFormDataStoreRequest(
-	values: CreateStoreFormValues,
-): FormData {
+export function createFormDataStoreRequest(values: CreateStoreFormValues): FormData {
 	const formData = new FormData();
 	formData.append("nome", values.nome);
 	formData.append("descricao", values.descricao);

@@ -30,7 +30,8 @@ export default function CreateStorePage() {
 	}
 
 	return (
-		<div className="py-10">
+		<div className="bg-gray-50 min-h-screen p-8">
+			<h1 className="text-2xl font-bold mb-6 text-center">Criação de Loja</h1>
 			<CreateStoreForm segmentos={segmentos} loading={loading} onSubmit={handleSubmit} />
 		</div>
 	);
