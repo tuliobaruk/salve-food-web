@@ -12,6 +12,7 @@ import LoginPage from "@/pages/LoginPage";
 import SingupPage from "@/pages/SingupPage";
 import TestPage from "@/pages/TestPage";
 import Dashboard from "./pages/Dashboard";
+import Layout from "./components/global_layout";
 
 const router = createBrowserRouter([
 	{
@@ -45,7 +46,9 @@ if (rootElement) {
 		<StrictMode>
 			<Toaster position="top-center" />
 			<AuthProvider>
-				<RouterProvider router={router} />
+				<Layout>
+					<RouterProvider router={router} />
+				</Layout>
 			</AuthProvider>
 		</StrictMode>,
 	);
