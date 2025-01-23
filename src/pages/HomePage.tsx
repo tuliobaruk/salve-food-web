@@ -9,11 +9,7 @@ export default function HomePage() {
 			{/* Cabeçalho */}
 			<header className="w-full flex justify-between items-center max-w-5xl mx-auto">
 				<div className="text-2xl font-bold flex items-center gap-2">
-					<img
-						src={salveImage}
-						alt="SalveFood"
-						className="w-20 h-20"
-					/>
+					<img src={salveImage} alt="SalveFood" className="w-20 h-20" />
 					<span>SalveFood</span>
 				</div>
 
@@ -38,9 +34,7 @@ export default function HomePage() {
 						<h1 className="text-5xl font-extrabold text-orange-500">
 							Salve <span className="text-gray-900">Food</span>
 						</h1>
-						<p className="text-xl text-gray-600 mt-4">
-							Bateu aquela fome? Dá um Salve!
-						</p>
+						<p className="text-xl text-gray-600 mt-4">Bateu aquela fome? Dá um Salve!</p>
 						<Link to="/login">
 							<Button
 								type="button"
@@ -51,13 +45,8 @@ export default function HomePage() {
 						</Link>
 					</div>
 
-
 					<div className="flex-shrink-0">
-						<img
-							src={comidas}
-							alt="Fast Food"
-							className="w-full max-w-lg"
-						/>
+						<img src={comidas} alt="Fast Food" className="w-full max-w-lg" />
 					</div>
 				</div>
 			</main>
