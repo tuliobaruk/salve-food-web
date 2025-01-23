@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 // Sidebar
 
-import SidebarLayout from "@/components/global_layout";
+import SidebarLayout from "@/components/sidebar/sidebar_layout";
 
 // Páginas
 
@@ -58,7 +58,6 @@ const router = createBrowserRouter([
 		path: "/createStore",
 		element: <CreateStorePage />,
 	},
-	// Rota Temporária, criei para testar a lógica de refresh dos tokens
 ]);
 
 export default router;
