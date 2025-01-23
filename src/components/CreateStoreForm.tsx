@@ -125,6 +125,10 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
+				<div className="border-t border-gray-200 mt-8 pt-6">
+					<h2 className="text-xl font-semibold mb-4">Dados Gerais</h2>
+				</div>
+
 				<FormField
 					control={form.control}
 					name="nome"
@@ -224,6 +228,11 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 						</FormItem>
 					)}
 				/>
+
+				<div className="border-t border-gray-200 mt-8 pt-6">
+					<h2 className="text-xl font-semibold mb-4">Dados de endereço</h2>
+				</div>
+
 				<FormField
 					control={form.control}
 					// @ts-expect-error: Não quero enviar CEP na requisição só está aqui para auxiliar o preenchimento

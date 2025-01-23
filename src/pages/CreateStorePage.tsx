@@ -5,10 +5,12 @@ import { z } from "zod";
 import { CreateStoreSchema } from "@/schema/zodSchemas";
 import axiosInstance from "@/api/axiosConfig";
 import { createFormDataStoreRequest } from "@/lib/createFormDataStoreRequest";
+import { useNavigate } from "react-router-dom";
 
 type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 
 export default function CreateStorePage() {
+	const navigate = useNavigate();
 	const { segmentos, loading } = useFetchSegmentos();
 
 	async function handleSubmit(values: CreateStoreFormValues) {
@@ -23,6 +25,7 @@ export default function CreateStorePage() {
 
 			toast.success("Loja criada com sucesso!");
 			console.log("Resposta da API:", response.data);
+			setTimeout(() => navigate("/dashboard"), 300);
 		} catch (error) {
 			toast.error("Falha ao submeter o form, erro detalhado no console.");
 			console.error("Erro ao submeter o form", error);
@@ -30,7 +33,8 @@ export default function CreateStorePage() {
 	}
 
 	return (
-		<div className="py-10">
+		<div className="bg-gray-50 min-h-screen p-8">
+			<h1 className="text-2xl font-bold mb-6 text-center">Criação de Loja</h1>
 			<CreateStoreForm segmentos={segmentos} loading={loading} onSubmit={handleSubmit} />
 		</div>
 	);

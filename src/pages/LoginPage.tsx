@@ -2,8 +2,10 @@ import { LoginForm } from "@/components/LoginForm";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+	const navigate = useNavigate();
 	const { login, logout } = useAuth();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -14,6 +16,7 @@ export default function LoginPage() {
 			logout();
 			await login(email, password);
 			toast.success("Seja Bem vindo!");
+			setTimeout(() => navigate("/createStore"), 300);
 		} catch (error) {
 			console.error("Falha ao logar", error);
 		}
