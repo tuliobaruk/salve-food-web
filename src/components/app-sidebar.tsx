@@ -50,7 +50,7 @@ const footerItems = [
 	},
 	{
 		title: "Sair",
-		url: "#",
+		url: "/logout",
 		icon: LogOut,
 	},
 ];

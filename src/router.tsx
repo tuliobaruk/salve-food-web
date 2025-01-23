@@ -14,12 +14,17 @@ import TestPage from "@/pages/TestPage";
 import Dashboard from "@/pages/Dashboard";
 import CreateStorePage from "@/pages/CreateStorePage";
 import Pedidos from "@/pages/PedidosPage";
+import LogoutPage from "@/pages/LogoutPage";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <HomePage />,
 		errorElement: <NotFoundPage />,
+	},
+	{
+		path: "/logout",
+		element: <LogoutPage />,
 	},
 	{
 		path: "/login",
