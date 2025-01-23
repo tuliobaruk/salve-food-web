@@ -1,4 +1,4 @@
-import { SquareMenu, Home, Inbox, Bike, Settings, LogOut, CircleHelp  } from "lucide-react";
+import { SquareMenu, Home, Inbox, Bike, Settings, LogOut, CircleHelp } from "lucide-react";
 
 import {
 	Sidebar,
@@ -15,7 +15,7 @@ import {
 const items = [
 	{
 		title: "Início",
-		url: "/",
+		url: "/dashboard",
 		icon: Home,
 	},
 	{
@@ -41,7 +41,7 @@ const items = [
 ];
 
 const footerItems = [
-    {
+	{
 		title: "Configurações",
 		url: "#",
 		icon: Settings,
@@ -51,7 +51,7 @@ const footerItems = [
 		url: "#",
 		icon: LogOut,
 	},
-]
+];
 
 export function AppSidebar() {
 	return (
@@ -74,8 +74,8 @@ export function AppSidebar() {
 						</SidebarMenu>
 					</SidebarGroupContent>
 				</SidebarGroup>
-                <div className="mt-auto">
-                <SidebarGroup>
+				<div className="mt-auto">
+					<SidebarGroup>
 						<SidebarGroupContent>
 							<SidebarMenu>
 								{footerItems.map((item) => (
@@ -91,7 +91,7 @@ export function AppSidebar() {
 							</SidebarMenu>
 						</SidebarGroupContent>
 					</SidebarGroup>
-                </div>
+				</div>
 			</SidebarContent>
 		</Sidebar>
 	);

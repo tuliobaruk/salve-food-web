@@ -11,7 +11,7 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import LoginPage from "@/pages/LoginPage";
 import SingupPage from "@/pages/SingupPage";
 import TestPage from "@/pages/TestPage";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "@/pages/Dashboard";
 import Layout from "@/components/global_layout";
 import CreateStorePage from "@/pages/CreateStorePage";
 import Pedidos from "@/pages/PedidosPage";

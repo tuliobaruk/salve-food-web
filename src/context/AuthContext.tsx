@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 	};
 
 	useEffect(() => {
-		const { accessToken } = getStoredTokens();
+		const [ accessToken ] = getStoredTokens();
 		if (accessToken) {
 			setSession(accessToken, null);
 			setIsAuthenticated(true);
