@@ -1,4 +1,3 @@
-import { SquareMenu, Home, Inbox, Bike, Settings, LogOut, CircleHelp } from "lucide-react";
 
 import {
 	Sidebar,
@@ -12,50 +11,9 @@ import {
 } from "@/components/ui/sidebar";
 
 import { Link } from "react-router-dom";
+import { footerItems, topItems } from "./sidebar_items";
 
-// Menu items.
-const items = [
-	{
-		title: "Início",
-		url: "/dashboard",
-		icon: Home,
-	},
-	{
-		title: "Pedidos",
-		url: "/pedidos",
-		icon: Inbox,
-	},
-	{
-		title: "Cardápio",
-		url: "#",
-		icon: SquareMenu,
-	},
-	{
-		title: "Entregas",
-		url: "#",
-		icon: Bike,
-	},
-	{
-		title: "Ajuda",
-		url: "#",
-		icon: CircleHelp,
-	},
-];
-
-const footerItems = [
-	{
-		title: "Configurações",
-		url: "#",
-		icon: Settings,
-	},
-	{
-		title: "Sair",
-		url: "/logout",
-		icon: LogOut,
-	},
-];
-
-export function AppSidebar() {
+export default function AppSidebar() {
 	return (
 		<Sidebar>
 			<SidebarContent>
@@ -63,7 +21,7 @@ export function AppSidebar() {
 					<SidebarGroupLabel>Nome do restaurante</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
-							{items.map((item) => (
+							{topItems.map((item) => (
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton asChild>
 										<Link to={item.url}>
