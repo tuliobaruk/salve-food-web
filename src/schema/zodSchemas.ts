@@ -52,3 +52,18 @@ export const CreateStoreSchema = z.object({
 			message: "O arquivo deve ser uma imagem (JPG ou PNG)",
 		}),
 });
+
+// Schema de criação de Item
+export const CreateItemSchema = z.object({
+	nome: z.string().min(1, { message: "O nome do item é obrigatório." }),
+	descricao: z.string().min(1, { message: "A descrição do item é obrigatório." }),
+	categoriaItemId: z.string().min(1, { message: "A categoria do item é obrigatória." }),
+	valor: z.string().min(1, { message: "Preço do item é obrigatório." }),
+	file: z
+		.instanceof(File)
+		.nullable()
+		.optional()
+		.refine((file) => !file || ["image/jpeg", "image/png"].includes(file.type), {
+			message: "O arquivo deve ser uma imagem (JPG ou PNG)",
+		}),
+});
