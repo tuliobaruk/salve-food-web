@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 
 import { Link } from "react-router-dom";
-import { footerItems, topItems } from "./sidebar_items";
+import { footerItems, topItems } from "@/components/sidebar/sidebar_items";
 
 export default function AppSidebar() {
 	return (
