@@ -185,7 +185,7 @@ export default function CreateItemForm({ categorias, loading, onSubmit }: Create
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Submit</Button>
+				<Button type="submit">Enviar</Button>
 			</form>
 		</Form>
 	);

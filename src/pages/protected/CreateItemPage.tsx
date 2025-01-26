@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import CreateItemForm from "@/components/CreateItemForm";
 import useFetchCategorias from "@/hooks/useFetchCategorias";
 import { useLoja } from "@/context/LojaContext";
+import { Button } from "@/components/ui/button";
 
 type CreateItemFormValues = z.infer<typeof CreateItemSchema>;
 
@@ -37,8 +38,19 @@ export default function CreateItemPage() {
 
 	return (
 		<div className="bg-gray-50 min-h-screen p-8">
-			<h1 className="text-2xl font-bold mb-6 text-center">Criação de Items</h1>
-			<CreateItemForm categorias={categorias} loading={loading} onSubmit={handleSubmit} />
+			<div className="w-full max-w-7xl relative mx-auto">
+				<h1 className="text-3xl font-bold text-center mb-6">Criação de Item</h1>
+				<Button
+					onClick={() => navigate("/cardapio")}
+					className="absolute left-0 top-0 flex items-center gap-2 bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-500 transition-all duration-300 ease-in-out transform hover:scale-105 rounded-lg shadow-md hover:shadow-lg"
+				>
+					Voltar
+				</Button>
+			</div>
+			<div className="mt-10">
+				<CreateItemForm categorias={categorias} loading={loading} onSubmit={handleSubmit} />
+			</div>
 		</div>
 	);
 }
+
