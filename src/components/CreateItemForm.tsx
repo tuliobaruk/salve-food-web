@@ -40,7 +40,6 @@ interface CreateItemFormProps {
 export default function CreateItemForm({ categorias, loading, onSubmit }: CreateItemFormProps) {
 	const [files, setFiles] = useState<File[] | null>(null);
 
-
 	const dropZoneConfig = {
 		maxFiles: 1,
 		maxSize: 1024 * 1024 * 4,
