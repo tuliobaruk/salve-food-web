@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import CreateStoreForm from "@/components/CreateStoreForm";
+import CreateStoreForm from "@/components/forms/CreateStoreForm";
 import useFetchSegmentos from "@/hooks/useFetchSegmentos";
 import { z } from "zod";
 import { CreateStoreSchema } from "@/schema/zodSchemas";

@@ -4,7 +4,7 @@ import { CreateItemSchema } from "@/schema/zodSchemas";
 import axiosInstance from "@/api/axiosConfig";
 import { createFormDataItemRequest } from "@/lib/createFormDataItemRequest";
 import { useNavigate } from "react-router-dom";
-import CreateItemForm from "@/components/CreateItemForm";
+import CreateItemForm from "@/components/forms/CreateItemForm";
 import useFetchCategorias from "@/hooks/useFetchCategorias";
 import { useLoja } from "@/context/LojaContext";
 import { Button } from "@/components/ui/button";
