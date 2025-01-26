@@ -6,12 +6,21 @@ import { CreateStoreSchema } from "@/schema/zodSchemas";
 import axiosInstance from "@/api/axiosConfig";
 import { createFormDataStoreRequest } from "@/lib/createFormDataStoreRequest";
 import { useNavigate } from "react-router-dom";
+import { useLoja } from "@/context/LojaContext";
+import { useEffect } from "react";
 
 type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 
 export default function CreateStorePage() {
+	const { loja } = useLoja();
 	const navigate = useNavigate();
 	const { segmentos, loading } = useFetchSegmentos();
+
+	useEffect(() => {
+		if (loja) {
+			navigate("/dashboard");
+		}
+	}, [loja, navigate]);
 
 	async function handleSubmit(values: CreateStoreFormValues) {
 		try {
