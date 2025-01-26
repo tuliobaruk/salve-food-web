@@ -6,17 +6,25 @@ import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
 	const navigate = useNavigate();
-	const { login, logout } = useAuth();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const { login, logout } = useAuth();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
 			logout();
-			await login(email, password);
-			toast.success("Seja Bem vindo!");
-			setTimeout(() => navigate("/createStore"), 300);
+			const loggedInUser = await login(email, password);
+
+			if (loggedInUser.roles.includes("dono_de_loja")) {
+				toast.success("Seja Bem-vindo!");
+				navigate("/dashboard");
+			} else {
+				toast.info(
+					"Bem-vindo ao SalveFood! Parece que você ainda não possui uma loja. Vamos começar criando a sua agora!",
+				);
+				navigate("/criar-loja");
+			}
 		} catch (error) {
 			console.error("Falha ao logar", error);
 		}
