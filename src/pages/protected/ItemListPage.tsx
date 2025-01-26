@@ -5,6 +5,8 @@ import { useItems } from "@/hooks/useItems";
 import { Pagination } from "@/components/Pagination";
 import { ItemGrid } from "@/components/ItemGrid";
 import { useLoja } from "@/context/LojaContext";
+import { Loading } from "@/components/Loading";
+
 
 export default function ItemListPage() {
 	const navigate = useNavigate();
@@ -34,7 +36,7 @@ export default function ItemListPage() {
 				</Button>
 
 				{loading ? (
-					<p>Carregando...</p>
+					<Loading/>
 				) : (
 					<>
 						<ItemGrid items={items} onEdit={handleEdit} onRemove={removeItem} />

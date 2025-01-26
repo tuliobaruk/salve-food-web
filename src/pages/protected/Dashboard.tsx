@@ -1,6 +1,8 @@
 import { useLoja } from "@/context/LojaContext";
 import { fetchLojaData } from "@/services/lojaService";
 import { useEffect, useState } from "react";
+import { Loading } from "@/components/Loading";
+
 
 export default function Dashboard() {
 	const { setLoja, loja } = useLoja();
@@ -24,10 +26,7 @@ export default function Dashboard() {
 	}, [loja, setLoja]);
 
 	if (loading) {
-		return (
-			<div className="flex min-h-screen items-center justify-center">
-				<p>Carregando...</p>
-			</div>
+		return ( <Loading/>
 		);
 	}
 
