@@ -60,9 +60,8 @@ export const CreateItemSchema = z.object({
 	categoriaItemId: z.string().min(1, { message: "A categoria do item é obrigatória." }),
 	valor: z.string().min(1, { message: "Preço do item é obrigatório." }),
 	file: z
-		.instanceof(File)
+		.instanceof(File, {message: "Uma imagem é necessária para cadastrar um item!"})
 		.nullable()
-		.optional()
 		.refine((file) => !file || ["image/jpeg", "image/png"].includes(file.type), {
 			message: "O arquivo deve ser uma imagem (JPG ou PNG)",
 		}),
