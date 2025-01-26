@@ -3,7 +3,6 @@ import { fetchLojaData } from "@/services/lojaService";
 import { useEffect, useState } from "react";
 import { Loading } from "@/components/Loading";
 
-
 export default function Dashboard() {
 	const { setLoja, loja } = useLoja();
 	const [loading, setLoading] = useState(true);
@@ -26,8 +25,7 @@ export default function Dashboard() {
 	}, [loja, setLoja]);
 
 	if (loading) {
-		return ( <Loading/>
-		);
+		return <Loading />;
 	}
 
 	return (

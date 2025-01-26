@@ -10,11 +10,11 @@ export default function LoginPage() {
 	const [password, setPassword] = useState("");
 	const { login, logout, isAuthenticated, user } = useAuth();
 
-		useEffect(() => {
-			if (isAuthenticated && user) {
-				navigate("/dashboard");
-			}
-		}, [isAuthenticated, user, navigate]);
+	useEffect(() => {
+		if (isAuthenticated && user) {
+			navigate("/dashboard");
+		}
+	}, [isAuthenticated, user, navigate]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();

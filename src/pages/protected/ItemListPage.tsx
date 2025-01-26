@@ -7,17 +7,14 @@ import { ItemGrid } from "@/components/ItemGrid";
 import { useLoja } from "@/context/LojaContext";
 import { Loading } from "@/components/Loading";
 
-
 export default function ItemListPage() {
 	const navigate = useNavigate();
 	const { loja } = useLoja();
 	const pageSize = 8;
-	const { items,
-		loading,
-		currentPage,
-		totalPages,
-		setCurrentPage,
-		removeItem } = useItems(loja?.id, pageSize);
+	const { items, loading, currentPage, totalPages, setCurrentPage, removeItem } = useItems(
+		loja?.id,
+		pageSize,
+	);
 
 	const handleEdit = (itemId: number) => navigate(`/editar-item/${itemId}`);
 	const handleCreateItem = () => navigate("/criar-item");
@@ -36,7 +33,7 @@ export default function ItemListPage() {
 				</Button>
 
 				{loading ? (
-					<Loading/>
+					<Loading />
 				) : (
 					<>
 						<ItemGrid items={items} onEdit={handleEdit} onRemove={removeItem} />
