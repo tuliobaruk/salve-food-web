@@ -31,6 +31,8 @@ export const setSession = (accessToken: string | null, refreshToken: string | nu
 		delete axios.defaults.headers.common["Authorization"];
 		localStorage.removeItem("access_token");
 		localStorage.removeItem("refresh_token");
+		localStorage.removeItem("user");
+		localStorage.removeItem("loja");
 	}
 };
 
