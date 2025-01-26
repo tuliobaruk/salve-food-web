@@ -4,6 +4,7 @@ import { StrictMode } from "react";
 import { Toaster } from "sonner";
 
 import { AuthProvider } from "@/context/AuthContext";
+import { LojaProvider } from "./context/LojaContext";
 import { RouterProvider } from "react-router-dom";
 import router from "@/router";
 
@@ -14,7 +15,9 @@ if (rootElement) {
 		<StrictMode>
 			<Toaster position="top-center" />
 			<AuthProvider>
-				<RouterProvider router={router} />
+				<LojaProvider>
+					<RouterProvider router={router} />
+				</LojaProvider>
 			</AuthProvider>
 		</StrictMode>,
 	);
