@@ -1,6 +1,6 @@
 import { LoginForm } from "@/components/LoginForm";
 import { useAuth } from "@/context/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,13 @@ export default function LoginPage() {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const { login, logout } = useAuth();
+	const { login, logout, isAuthenticated, user } = useAuth();
+
+		useEffect(() => {
+			if (isAuthenticated && user) {
+				navigate("/dashboard");
+			}
+		}, [isAuthenticated, user, navigate]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
