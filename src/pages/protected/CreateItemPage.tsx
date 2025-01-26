@@ -6,17 +6,19 @@ import { createFormDataItemRequest } from "@/lib/createFormDataItemRequest";
 import { useNavigate } from "react-router-dom";
 import CreateItemForm from "@/components/CreateItemForm";
 import useFetchCategorias from "@/hooks/useFetchCategorias";
+import { useLoja } from "@/context/LojaContext";
 
 type CreateItemFormValues = z.infer<typeof CreateItemSchema>;
 
 export default function CreateItemPage() {
 	const navigate = useNavigate();
 	const { categorias, loading } = useFetchCategorias();
+	const { loja } = useLoja();
 
 	async function handleSubmit(values: CreateItemFormValues) {
 		try {
 			const formData = createFormDataItemRequest(values);
-			formData.append("lojaId", (await axiosInstance.get("/api/loja/minha")).data.id);
+			formData.append("lojaId", String(loja?.id));
 
 			const response = await axiosInstance.post("/api/item", formData, {
 				headers: {
@@ -26,7 +28,7 @@ export default function CreateItemPage() {
 
 			toast.success("Item criado com sucesso!");
 			console.log("Resposta da API:", response.data);
-			setTimeout(() => navigate("/dashboard"), 300);
+			setTimeout(() => navigate("/cardapio"), 300);
 		} catch (error) {
 			toast.error("Falha ao submeter o form, erro detalhado no console.");
 			console.error("Erro ao submeter o form", error);

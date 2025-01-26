@@ -18,7 +18,6 @@ import Pedidos from "@/pages/protected/PedidosPage";
 import CreateItemPage from "@/pages/protected/CreateItemPage";
 import ItemListPage from "@/pages/protected/ItemListPage";
 
-
 const router = createBrowserRouter([
 	// Rotas Públicas
 	{
