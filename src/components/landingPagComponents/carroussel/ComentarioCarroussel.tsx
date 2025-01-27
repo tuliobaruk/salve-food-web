@@ -12,34 +12,39 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/landingPagComp
 export default function ComentarioCarroussel() {
   const comentarios = [
     {
-      name: "João Silva",
-      comment: "Uso o SalveFood todos os dias, sempre entregam no prazo!",
-      avatar:
-        "https://img.freepik.com/fotos-gratis/vista-frontal-homem-sorridente-tomando-selfie_23-2149556994.jpg?ga=GA1.1.647953801.1737834046&semt=ais_hybrid",
+      name: "Boteco do Professor",
+      comment: "A plataforma SalveFood fez nossa entrega mais eficiente e aumentou nossas vendas.",
+      avatar: "https://i.ibb.co/gv5rpLs/botecodoprofessor.jpg",
     },
     {
-      name: "Maria Oliveira",
-      comment: "Adoro as promoções e a variedade de opções disponíveis.",
-      avatar:
-        "https://img.freepik.com/fotos-gratis/jovem-feliz-tirando-foto-de-selfie-ao-ar-livre_1262-19167.jpg?ga=GA1.1.647953801.1737834046&semt=ais_hybrid",
+      name: "Brazzetus",
+      comment: "O processo de cadastro é simples e o suporte ao cliente é excelente!",
+      avatar: "https://i.ibb.co/r7HHNVq/brazzetus.jpg",
     },
     {
-      name: "Carlos Lima",
-      comment: "O melhor app de delivery que já usei!",
-      avatar:
-        "https://img.freepik.com/fotos-gratis/botanico-ou-biologo-barbudo-de-meia-idade-usando-chapeu-panama_273609-6319.jpg?ga=GA1.1.647953801.1737834046&semt=ais_hybrid",
+      name: "Dominos Pizzaria",
+      comment: "Com a SalveFood, conseguimos alcançar muito mais clientes e aumentar a visibilidade da nossa marca.",
+      avatar: "https://i.ibb.co/0jyw2tj/dominos.jpg",
     },
     {
-      name: "Ana Costa",
-      comment: "Recomendo a todos, é rápido e confiável.",
-      avatar:
-        "https://img.freepik.com/fotos-gratis/jovem-negra-com-cabelo-afro-rindo-e-curtindo_150588-161.jpg?ga=GA1.1.647953801.1737834046&semt=ais_hybrid",
+      name: "Gildo Lanches",
+      comment: "A plataforma é super fácil de usar e as entregas são feitas rapidamente!",
+      avatar: "https://i.ibb.co/5YYrcKt/gildo.png",
     },
     {
-      name: "Paulo Souza",
-      comment: "Excelentes descontos e entregas sempre pontuais!",
-      avatar:
-        "https://img.freepik.com/fotos-gratis/conceito-de-pessoas-viagens-e-aventura-jovem-e-atraente-barbudo-aventureiro-usando-mochila-e-bone-tirando-selfie_273609-1860.jpg?ga=GA1.1.647953801.1737834046&semt=ais_hybrid",
+      name: "Pappa Johns Pizzaria",
+      comment: "Os descontos exclusivos ajudaram a fidelizar ainda mais nossos clientes.",
+      avatar: "https://i.ibb.co/NTgbnLH/papajohns.png",
+    },
+    {
+      name: "Porcão",
+      comment: "A SalveFood oferece uma excelente plataforma de gestão de pedidos.",
+      avatar: "https://i.ibb.co/1ntkyxm/porcao.png",
+    },
+    {
+      name: "Spettus",
+      comment: "Recomendo a plataforma para todos os restaurantes! Aumentou nossa produtividade.",
+      avatar: "https://i.ibb.co/6bydgkt/speetus.png",
     },
   ];
 
@@ -59,10 +64,11 @@ export default function ComentarioCarroussel() {
         style={{
           transform: `translateX(-${activeIndex * 100}%)`,
           transition: "transform 0.5s ease-in-out",
+          padding: '0 10px',
         }}
       >
         {comentarios.map((testimonial, index) => (
-          <CarouselItem key={index} className="p-2">
+          <CarouselItem key={index} className="p-2 overflow-hidden">
             <Card className="shadow-lg">
               <CardContent className="flex flex-col items-center justify-center p-6">
                 <Avatar className="w-16 h-16 mb-4">
