@@ -16,6 +16,7 @@ import Dashboard from "@/pages/protected/Dashboard";
 import CreateStorePage from "@/pages/protected/CreateStorePage";
 import Pedidos from "@/pages/protected/PedidosPage";
 import CreateItemPage from "@/pages/protected/CreateItemPage";
+import EditItemPage from "@/pages/protected/EditItemPage";
 import ItemListPage from "@/pages/protected/ItemListPage";
 
 const router = createBrowserRouter([
@@ -79,6 +80,14 @@ const router = createBrowserRouter([
 					</SidebarLayout>
 				),
 			},
+			{
+				path: "editar-item/:id",
+				element: (
+				  <SidebarLayout>
+					<EditItemPage />
+				  </SidebarLayout>
+				),
+			  },
 		],
 	},
 ]);
