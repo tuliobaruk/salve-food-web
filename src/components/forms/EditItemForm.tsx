@@ -70,13 +70,13 @@ export default function EditItemForm({
 	const form = useForm<EditItemFormValues>({
 		resolver: zodResolver(CreateItemSchema),
 		defaultValues: {
-			nome: item.nome,
-			descricao: item.descricao,
-			categoriaItemId: item.categoriaItemId,
-			valor: String(item.valor),
-			file: null,
+		  nome: item.nome,
+		  descricao: item.descricao,
+		  categoriaItemId: String(item.categoriaItemId || ""),
+		  valor: String(item.valor),
+		  file: null,
 		},
-	});
+	  });
 
 	return (
 		<Form {...form}>

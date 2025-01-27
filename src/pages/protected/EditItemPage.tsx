@@ -31,18 +31,29 @@ export default function EditItemPage() {
 
   useEffect(() => {
     async function fetchItem() {
-        try {
-          const response = await axiosInstance.get(`/api/item/unico/${id}`, {
-            params: { id },
-          });
-          setItem(response.data);
-          setLoading(false);
-        } catch (error) {
-          toast.error("Erro ao carregar dados do item.");
-          console.error("Erro ao buscar item:", error);
-          navigate("/cardapio");
-        }
+      try {
+        const response = await axiosInstance.get(`/api/item/unico/${id}`, {
+          params: { id },
+        });
+
+        const fetchedItem = response.data;
+
+        setItem({
+          nome: fetchedItem.nome,
+          descricao: fetchedItem.descricao,
+          valor: fetchedItem.valor,
+          categoriaItemId: String(fetchedItem.categoriaItem.id),
+          itemImage: fetchedItem.itemImage,
+        });
+
+        setLoading(false);
+      } catch (error) {
+        toast.error("Erro ao carregar dados do item.");
+        console.error("Erro ao buscar item:", error);
+        navigate("/cardapio");
       }
+    }
+
     if (id) fetchItem();
   }, [id, navigate]);
 
