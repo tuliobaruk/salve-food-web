@@ -1,19 +1,38 @@
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/components/forms/LoginForm";
 import { useAuth } from "@/context/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { useLoja } from "@/context/LojaContext";
 
 export default function LoginPage() {
-	const { login, logout } = useAuth();
+	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const { login, logout, isAuthenticated, user } = useAuth();
+	const { loja } = useLoja();
+
+	useEffect(() => {
+		if (isAuthenticated && user && loja) {
+			navigate("/dashboard");
+		}
+	}, [isAuthenticated, user, navigate, loja]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
 			logout();
-			await login(email, password);
-			toast.success("Seja Bem vindo!");
+			const loggedInUser = await login(email, password);
+
+			if (loggedInUser.roles.includes("dono_de_loja")) {
+				toast.success("Seja Bem-vindo!");
+				navigate("/dashboard");
+			} else {
+				toast.info(
+					"Bem-vindo ao SalveFood! Parece que você ainda não possui uma loja. Vamos começar criando a sua agora!",
+				);
+				navigate("/criar-loja");
+			}
 		} catch (error) {
 			console.error("Falha ao logar", error);
 		}

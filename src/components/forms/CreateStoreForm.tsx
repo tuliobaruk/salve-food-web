@@ -19,7 +19,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { CloudUpload, Paperclip } from "lucide-react";
+import {
+	FileInput,
+	FileUploader,
+	FileUploaderContent,
+	FileUploaderItem,
+} from "@/components/ui/file-upload";
 import { CreateStoreSchema } from "@/schema/zodSchemas";
+import { useState } from "react";
 
 type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 
@@ -60,6 +68,46 @@ const estados: Record<string, string> = {
 };
 
 export default function CreateStoreForm({ segmentos, loading, onSubmit }: CreateStoreFormProps) {
+	const [files, setFiles] = useState<File[] | null>(null);
+	const [cep, setCep] = useState<string>("");
+
+	const dropZoneConfig = {
+		maxFiles: 1,
+		maxSize: 1024 * 1024 * 4,
+		multiple: false,
+	};
+
+	const handleFileChange = (uploadedFiles: File[] | null) => {
+		setFiles(uploadedFiles);
+		if (uploadedFiles && uploadedFiles[0]) {
+			form.setValue("file", uploadedFiles[0]);
+		} else {
+			form.setValue("file", null);
+		}
+	};
+
+	const handleCepSearch = async () => {
+		if (cep.length === 8) {
+			try {
+				const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+				const data = await response.json();
+				if (data.cep) {
+					form.setValue("rua", data.logradouro || "");
+					form.setValue("bairro", data.bairro || "");
+					form.setValue("cidade", data.localidade || "");
+					form.setValue("estado", data.uf || "");
+				} else {
+					alert("CEP não encontrado.");
+				}
+			} catch (error) {
+				console.log("Erro ao buscar o CEP.");
+				console.error(error);
+			}
+		} else {
+			alert("Digite um CEP válido.");
+		}
+	};
+
 	const form = useForm<CreateStoreFormValues>({
 		resolver: zodResolver(CreateStoreSchema),
 		defaultValues: {
@@ -77,6 +125,10 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
+				<div className="border-t border-gray-200 mt-8 pt-6">
+					<h2 className="text-xl font-semibold mb-4">Dados Gerais</h2>
+				</div>
+
 				<FormField
 					control={form.control}
 					name="nome"
@@ -129,6 +181,78 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 								</SelectContent>
 							</Select>
 							<FormDescription>Segmento onde a loja mais se encaixa</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<FormField
+					control={form.control}
+					name="file"
+					render={() => (
+						<FormItem>
+							<FormLabel>Imagem</FormLabel>
+							<FormControl>
+								<FileUploader
+									value={files}
+									onValueChange={handleFileChange}
+									dropzoneOptions={dropZoneConfig}
+									className="relative bg-background rounded-lg p-2"
+								>
+									<FileInput id="fileInput" className="outline-dashed outline-1 outline-slate-500">
+										<div className="flex items-center justify-center flex-col p-8 w-full ">
+											<CloudUpload className="text-gray-500 w-10 h-10" />
+											<p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+												<span className="font-semibold">Clique para fazer upload</span>
+												&nbsp; ou araste uma imagem
+											</p>
+											<p className="text-xs text-gray-500 dark:text-gray-400">PNG ou JPG</p>
+										</div>
+									</FileInput>
+									<FileUploaderContent>
+										{files &&
+											files.length > 0 &&
+											files.map((file, i) => (
+												<FileUploaderItem key={i} index={i}>
+													<Paperclip className="h-4 w-4 stroke-current" />
+													<span>{file.name}</span>
+												</FileUploaderItem>
+											))}
+									</FileUploaderContent>
+								</FileUploader>
+							</FormControl>
+							<FormDescription>Uma Imagem para sua loja</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<div className="border-t border-gray-200 mt-8 pt-6">
+					<h2 className="text-xl font-semibold mb-4">Dados de endereço</h2>
+				</div>
+
+				<FormField
+					control={form.control}
+					// @ts-expect-error: Não quero enviar CEP na requisição só está aqui para auxiliar o preenchimento
+					name="cep"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>CEP</FormLabel>
+							<FormControl>
+								{/* @ts-expect-error: Não quero enviar CEP na requisição só está aqui para auxiliar o preenchimento */}
+								<Input
+									placeholder="Digite o CEP"
+									type="text"
+									{...field}
+									onChange={(e) => {
+										field.onChange(e);
+										setCep(e.target.value);
+									}}
+								/>
+							</FormControl>
+							<Button type="button" onClick={handleCepSearch} className="mt-4">
+								Buscar CEP
+							</Button>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -206,15 +330,15 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Estado</FormLabel>
-									<Select onValueChange={field.onChange} defaultValue={field.value}>
+									<Select value={field.value || ""} onValueChange={field.onChange}>
 										<FormControl>
 											<SelectTrigger>
-												<SelectValue placeholder="Estado" />
+												<SelectValue placeholder="Selecione o estado" />
 											</SelectTrigger>
 										</FormControl>
 										<SelectContent>
 											{Object.entries(estados).map(([codigo, nome]) => (
-												<SelectItem key={codigo} value={nome}>
+												<SelectItem key={codigo} value={codigo}>
 													{nome}
 												</SelectItem>
 											))}
@@ -227,7 +351,7 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 					</div>
 				</div>
 
-				<Button type="submit">Submit</Button>
+				<Button type="submit">Enviar</Button>
 			</form>
 		</Form>
 	);
