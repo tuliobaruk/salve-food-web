@@ -44,12 +44,7 @@ interface EditItemFormProps {
 	onSubmit: (values: EditItemFormValues) => void;
 }
 
-export default function EditItemForm({
-	item,
-	categorias,
-	loading,
-	onSubmit,
-}: EditItemFormProps) {
+export default function EditItemForm({ item, categorias, loading, onSubmit }: EditItemFormProps) {
 	const [files, setFiles] = useState<File[] | null>(null);
 
 	const dropZoneConfig = {
@@ -70,13 +65,13 @@ export default function EditItemForm({
 	const form = useForm<EditItemFormValues>({
 		resolver: zodResolver(CreateItemSchema),
 		defaultValues: {
-		  nome: item.nome,
-		  descricao: item.descricao,
-		  categoriaItemId: String(item.categoriaItemId || ""),
-		  valor: String(item.valor),
-		  file: null,
+			nome: item.nome,
+			descricao: item.descricao,
+			categoriaItemId: String(item.categoriaItemId || ""),
+			valor: String(item.valor),
+			file: null,
 		},
-	  });
+	});
 
 	return (
 		<Form {...form}>
@@ -169,15 +164,18 @@ export default function EditItemForm({
 										src={item.itemImage}
 										alt={item.nome}
 										className="rounded-lg w-64 h-64 object-cover"
-										/>
-										<FormDescription>Imagem atual do item</FormDescription>
+									/>
+									<FormDescription>Imagem atual do item</FormDescription>
 									<FileUploader
 										value={files}
 										onValueChange={handleFileChange}
 										dropzoneOptions={dropZoneConfig}
 										className="relative bg-background rounded-lg p-2"
 									>
-										<FileInput id="fileInput" className="outline-dashed outline-1 outline-slate-500">
+										<FileInput
+											id="fileInput"
+											className="outline-dashed outline-1 outline-slate-500"
+										>
 											<div className="flex items-center justify-center flex-col p-8 w-full">
 												<CloudUpload className="text-gray-500 w-10 h-10" />
 												<p className="mb-1 text-sm text-gray-500 dark:text-gray-400">

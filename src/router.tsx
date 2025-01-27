@@ -83,11 +83,11 @@ const router = createBrowserRouter([
 			{
 				path: "editar-item/:id",
 				element: (
-				  <SidebarLayout>
-					<EditItemPage />
-				  </SidebarLayout>
+					<SidebarLayout>
+						<EditItemPage />
+					</SidebarLayout>
 				),
-			  },
+			},
 		],
 	},
 ]);
