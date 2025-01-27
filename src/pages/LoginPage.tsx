@@ -3,18 +3,20 @@ import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useLoja } from "@/context/LojaContext";
 
 export default function LoginPage() {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { login, logout, isAuthenticated, user } = useAuth();
+	const { loja } = useLoja();
 
 	useEffect(() => {
-		if (isAuthenticated && user) {
+		if (isAuthenticated && user && loja) {
 			navigate("/dashboard");
 		}
-	}, [isAuthenticated, user, navigate]);
+	}, [isAuthenticated, user, navigate, loja]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
