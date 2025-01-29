@@ -42,69 +42,8 @@ const router = createBrowserRouter([
 		element: <LogoutPage />,
 	},
 
-	//visualizando as paginas privados
 
-	{
-		path: "criar-loja",
-		element: <CreateStorePage />,
-	},
-	///////////////////////////////////////
-	{
-		path: "motoristas",
-		element: (
-			<SidebarLayout>
-				<DriverListPage />
-			</SidebarLayout>
-		),
-	},
-	{
-		path: "criar-motorista",
-		element: <SidebarLayout>
-			<CreateDriverPage />
-		</SidebarLayout>
-	},
 
-	//////////////////////////////////////
-	{
-		path: "dashboard",
-		element: (
-			<SidebarLayout>
-				<Dashboard />
-			</SidebarLayout>
-		),
-	},
-	{
-		path: "pedidos",
-		element: (
-			<SidebarLayout>
-				<Pedidos />
-			</SidebarLayout>
-		),
-	},
-	{
-		path: "cardapio",
-		element: (
-			<SidebarLayout>
-				<ItemListPage />
-			</SidebarLayout>
-		),
-	},
-	{
-		path: "criar-item",
-		element: (
-			<SidebarLayout>
-				<CreateItemPage />
-			</SidebarLayout>
-		),
-	},
-	{
-		path: "editar-item/:id",
-		element: (
-			<SidebarLayout>
-				<EditItemPage />
-			</SidebarLayout>
-		),
-	},
 
 	// Grupo de Rotas Protegidas, adicionar novas como children
 	{
@@ -154,6 +93,20 @@ const router = createBrowserRouter([
 						<EditItemPage />
 					</SidebarLayout>
 				),
+			},
+			{
+				path: "motoristas",
+				element: (
+					<SidebarLayout>
+						<DriverListPage />
+					</SidebarLayout>
+				),
+			},
+			{
+				path: "criar-motorista",
+				element: <SidebarLayout>
+					<CreateDriverPage />
+				</SidebarLayout>
 			},
 		],
 	},
