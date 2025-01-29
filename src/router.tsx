@@ -19,6 +19,9 @@ import CreateItemPage from "@/pages/protected/CreateItemPage";
 import EditItemPage from "@/pages/protected/EditItemPage";
 import ItemListPage from "@/pages/protected/ItemListPage";
 
+import CreateDriverPage from "@/pages/protected/CreateDriverPage";
+import DriverListPage from "@/pages/protected/DriverListPage";
+
 const router = createBrowserRouter([
 	// Rotas Públicas
 	{
@@ -37,6 +40,70 @@ const router = createBrowserRouter([
 	{
 		path: "/logout",
 		element: <LogoutPage />,
+	},
+
+	//visualizando as paginas privados
+
+	{
+		path: "criar-loja",
+		element: <CreateStorePage />,
+	},
+	///////////////////////////////////////
+	{
+		path: "motoristas",
+		element: (
+			<SidebarLayout>
+				<DriverListPage />
+			</SidebarLayout>
+		),
+	},
+	{
+		path: "criar-motorista",
+		element: <SidebarLayout>
+			<CreateDriverPage />
+		</SidebarLayout>
+	},
+
+	//////////////////////////////////////
+	{
+		path: "dashboard",
+		element: (
+			<SidebarLayout>
+				<Dashboard />
+			</SidebarLayout>
+		),
+	},
+	{
+		path: "pedidos",
+		element: (
+			<SidebarLayout>
+				<Pedidos />
+			</SidebarLayout>
+		),
+	},
+	{
+		path: "cardapio",
+		element: (
+			<SidebarLayout>
+				<ItemListPage />
+			</SidebarLayout>
+		),
+	},
+	{
+		path: "criar-item",
+		element: (
+			<SidebarLayout>
+				<CreateItemPage />
+			</SidebarLayout>
+		),
+	},
+	{
+		path: "editar-item/:id",
+		element: (
+			<SidebarLayout>
+				<EditItemPage />
+			</SidebarLayout>
+		),
 	},
 
 	// Grupo de Rotas Protegidas, adicionar novas como children

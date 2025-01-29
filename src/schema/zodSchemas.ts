@@ -66,3 +66,12 @@ export const CreateItemSchema = z.object({
 			message: "O arquivo deve ser uma imagem (JPG ou PNG)",
 		}),
 });
+
+// Schema de criação de Motorista
+
+export const CreateDriverSchema = z.object({
+	nome: z.string().min(1, { message: "O nome do motorista é obrigatório." }),
+	telefone: z.string().min(1, { message: "O numero do motorista é obrigatório." }),
+
+});
+
