@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/file-upload";
 import { CreateStoreSchema } from "@/schema/zodSchemas";
 import { useState } from "react";
+import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
 
 type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 
@@ -66,6 +67,25 @@ const estados: Record<string, string> = {
 	SE: "Sergipe",
 	TO: "Tocantins",
 };
+
+// MultiSelector:
+const OPTIONS_DiasDeFuncionamento: Option[] = [
+	{ label: "Segunda-feira", value: "SEG" },
+	{ label: "Terça-feira", value: "TER"},
+	{ label: "Quarta-feira", value: "QUAR"},
+	{ label: "Quinta-feira", value: "QUI"},
+	{ label: "Sexta-feira", value: "SEX"},
+	{ label: "Domingo", value: "DOM"},
+];
+
+const OPTIONS_TiposDePagamento: Option[] = [
+	{ label: "Dinheiro", value: "DINHEIRO" },
+	{ label: "Cartão de Débito", value: "CARTAO_DEBITO"},
+	{ label: "Cartão de Crédito", value: "CARTAO_CREDITO"},
+	{ label: "Pix", value: "PIX"},
+
+];
+
 
 export default function CreateStoreForm({ segmentos, loading, onSubmit }: CreateStoreFormProps) {
 	const [files, setFiles] = useState<File[] | null>(null);
@@ -347,6 +367,30 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 									<FormMessage />
 								</FormItem>
 							)}
+						/>
+					</div>
+
+					<div className="col-span-6">
+						<MultipleSelector
+							defaultOptions={OPTIONS_DiasDeFuncionamento}
+							placeholder="Selecione os dias de funcionamento do estabelecimento"
+							emptyIndicator={
+								<p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+									Nenhuma opção encontrada
+								</p>
+							}
+						/>
+					</div>
+
+					<div className="col-span-6">
+						<MultipleSelector
+							defaultOptions={OPTIONS_TiposDePagamento}
+							placeholder="Selecione os tipos de pagamento aceitos"
+							emptyIndicator={
+								<p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+									Nenhuma opção encontrada
+								</p>
+							}
 						/>
 					</div>
 				</div>
