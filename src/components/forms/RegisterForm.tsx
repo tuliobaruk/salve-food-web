@@ -21,7 +21,7 @@ import { RegisterSchema } from "@/schema/zodSchemas";
 import { splitName } from "@/lib/utils";
 import axiosInstance from "@/api/axiosConfig";
 import axios from "axios";
-import { logout } from "@/api/authService";
+import { logout } from "@/services/authService";
 
 // Usando o schema que criei na pasta @/schema
 // Podemos usar o Zod para validar outros cadastros da applicação

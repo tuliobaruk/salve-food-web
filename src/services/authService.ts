@@ -13,7 +13,7 @@ export const login = async (username: string, password: string): Promise<AuthRes
 	return response.data;
 };
 
-export const refreshToken = async (refreshToken: string): Promise<AuthResponse> => {
+export const doTokenRefresh = async (refreshToken: string): Promise<AuthResponse> => {
 	const response = await axios.post<AuthResponse>("/api/auth/refresh", {
 		refreshToken: refreshToken,
 	});
@@ -31,6 +31,8 @@ export const setSession = (accessToken: string | null, refreshToken: string | nu
 		delete axios.defaults.headers.common["Authorization"];
 		localStorage.removeItem("access_token");
 		localStorage.removeItem("refresh_token");
+		localStorage.removeItem("user");
+		localStorage.removeItem("loja");
 	}
 };
 
@@ -43,6 +45,9 @@ export const getStoredTokens = () => {
 export const logout = () => {
 	localStorage.removeItem("access_token");
 	localStorage.removeItem("refresh_token");
+	localStorage.removeItem("user");
+	localStorage.removeItem("loja");
+
 	setSession(null, null);
 };
 

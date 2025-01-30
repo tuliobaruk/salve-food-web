@@ -14,7 +14,7 @@ export const topItems = [
 	},
 	{
 		title: "Cardápio",
-		url: "#",
+		url: "/cardapio",
 		icon: SquareMenu,
 	},
 	{

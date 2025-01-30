@@ -206,9 +206,7 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 												<span className="font-semibold">Clique para fazer upload</span>
 												&nbsp; ou araste uma imagem
 											</p>
-											<p className="text-xs text-gray-500 dark:text-gray-400">
-												SVG, PNG, JPG ou GIF
-											</p>
+											<p className="text-xs text-gray-500 dark:text-gray-400">PNG ou JPG</p>
 										</div>
 									</FileInput>
 									<FileUploaderContent>
