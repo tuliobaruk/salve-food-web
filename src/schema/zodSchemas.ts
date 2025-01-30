@@ -39,6 +39,14 @@ export const CreateStoreSchema = z.object({
 	nome: z.string().min(1, { message: "O nome da loja é obrigatório." }),
 	descricao: z.string().min(1, { message: "A descrição da loja é obrigatória." }),
 	segmentoLojaId: z.string().min(1, { message: "O segmento da loja é obrigatório." }),
+	diasFuncionamento: z
+		.string()
+		.array()
+		.nonempty({ message: "Selecione pelomenos um dia de funcionamento" }),
+	tiposPagamento: z
+		.string()
+		.array()
+		.nonempty({ message: "Selecione pelomenos um tipo de pagamento" }),
 	rua: z.string().min(1, { message: "O nome da rua é obrigatório." }),
 	bairro: z.string().min(1, { message: "O bairro é obrigatório." }),
 	numero: z.string().min(1, { message: "O número é obrigatório." }),
