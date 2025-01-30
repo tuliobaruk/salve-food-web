@@ -132,6 +132,8 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 			nome: "",
 			descricao: "",
 			segmentoLojaId: "",
+			diasFuncionamento: [],
+			tiposPagamento: [],
 			rua: "",
 			bairro: "",
 			numero: "",
