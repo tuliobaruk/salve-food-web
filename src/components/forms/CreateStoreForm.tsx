@@ -213,7 +213,7 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 							<FormControl>
 								<MultipleSelector
 									defaultOptions={OPTIONS_DiasDeFuncionamento}
-									onChange={field.onChange}
+									onChange={(options) => field.onChange(options.map((option) => option.value))}
 									emptyIndicator={
 										<p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
 											Nenhuma opção encontrada
@@ -238,7 +238,7 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 							<FormControl>
 								<MultipleSelector
 									defaultOptions={OPTIONS_TiposDePagamento}
-									onChange={field.onChange}
+									onChange={(options) => field.onChange(options.map((option) => option.value))}
 									emptyIndicator={
 										<p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
 											Nenhuma opção encontrada
