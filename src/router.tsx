@@ -19,6 +19,7 @@ import CreateItemPage from "@/pages/protected/CreateItemPage";
 import EditItemPage from "@/pages/protected/EditItemPage";
 import ItemListPage from "@/pages/protected/ItemListPage";
 import DriverListPage from "@/pages/protected/DriverListPage";
+import CreateDriverPage from "@/pages/protected/CreateDriverPage";
 
 const router = createBrowserRouter([
 	// Rotas Públicas
@@ -94,6 +95,14 @@ const router = createBrowserRouter([
 				element: (
 					<SidebarLayout>
 						<DriverListPage />
+					</SidebarLayout>
+				),
+			},
+			{
+				path: "criar-entregador",
+				element: (
+					<SidebarLayout>
+						<CreateDriverPage />
 					</SidebarLayout>
 				),
 			},

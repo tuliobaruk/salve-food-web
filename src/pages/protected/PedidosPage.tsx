@@ -89,7 +89,7 @@ export default function Pedidos() {
 	const [modalPedido, setModalPedido] = useState<{ acao: string; pedido: any } | null>(null);
 	const [rotinaNotificacao, setRotinaNotificacao] = useState<NodeJS.Timeout | null>(null);
 	const [musica, setMusica] = useState<string | undefined>(undefined);
-	const handleAcaoPedido = (acao:any, pedido:any) => {
+	const handleAcaoPedido = (acao: any, pedido: any) => {
 		if (acao === "aceitar") {
 			setPedidosAceitos((prev) => [...prev, pedido]);
 			setPedidosPendentes((prev) => prev.filter((p) => p.id !== pedido.id));
@@ -99,7 +99,7 @@ export default function Pedidos() {
 		setModalPedido(null); // Fecha o modal após a ação
 	};
 
-	const handleFinalizarPedido = (pedido:any) => {
+	const handleFinalizarPedido = (pedido: any) => {
 		setPedidosAceitos((prev) => prev.filter((p) => p.id !== pedido.id));
 		setPedidosAguardandoMotorista((prev) => [...prev, pedido]);
 		alert(`Pedido #${pedido.id} foi finalizado.`);
@@ -127,25 +127,28 @@ export default function Pedidos() {
 			return;
 		}
 
-		setRotinaNotificacao(setInterval(async () => {
-			const resp = await axiosInstance.get("/api/notifications");
-			console.log("notifications");
-			if (resp.data.length > 0) {
-				
-				if (musica) {
-					const audio = new Audio(musica);
-					audio.play();
-				} else {
-					const audio = new Audio(await getMusica());
-					audio.play();
-					console.log("musica era pra ta tocando agora não?");
+		setRotinaNotificacao(
+			setInterval(async () => {
+				const resp = await axiosInstance.get("/api/notifications");
+				console.log("notifications");
+				if (resp.data.length > 0) {
+					if (musica) {
+						const audio = new Audio(musica);
+						audio.play();
+					} else {
+						const audio = new Audio(await getMusica());
+						audio.play();
+						console.log("musica era pra ta tocando agora não?");
+					}
 				}
-			}
-			resp.data.forEach(async (notificacao: Notificacao) => {
-				toast.info(`Pedido #${notificacao.pedidoId} de ${notificacao.senderName}: ${notificacao.message}`);
-				await axiosInstance.delete(`/api/notifications/${notificacao.id}`);
-			});
-		}, 5000)); // Intervalo de 5 segundos, ajuste conforme necessário
+				resp.data.forEach(async (notificacao: Notificacao) => {
+					toast.info(
+						`Pedido #${notificacao.pedidoId} de ${notificacao.senderName}: ${notificacao.message}`,
+					);
+					await axiosInstance.delete(`/api/notifications/${notificacao.id}`);
+				});
+			}, 5000),
+		); // Intervalo de 5 segundos, ajuste conforme necessário
 	};
 
 	useEffect(() => {
@@ -255,7 +258,7 @@ export default function Pedidos() {
 										<strong>Pedido #{pedido.id}</strong> - {pedido.cliente}
 									</p>
 									<ul className="text-gray-500 text-sm">
-										{pedido.itens.map((item:any, index:number) => (
+										{pedido.itens.map((item: any, index: number) => (
 											<li key={index}>
 												{item.quantidade} x {item.nome}
 											</li>
@@ -286,7 +289,7 @@ export default function Pedidos() {
 										<strong>Pedido #{pedido.id}</strong> - {pedido.cliente}
 									</p>
 									<ul className="text-gray-500 text-sm">
-										{pedido.itens.map((item:any, index:number) => (
+										{pedido.itens.map((item: any, index: number) => (
 											<li key={index}>
 												{item.quantidade} x {item.nome}
 											</li>
