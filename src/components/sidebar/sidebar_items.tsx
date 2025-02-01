@@ -1,4 +1,4 @@
-import { SquareMenu, Home, Inbox, Bike, Settings, LogOut, CircleHelp } from "lucide-react";
+import { SquareMenu, Home, Inbox, Bike, Settings, LogOut, CircleHelp, PackageCheckIcon } from "lucide-react";
 
 // Menu items.
 export const topItems = [
@@ -18,9 +18,14 @@ export const topItems = [
 		icon: SquareMenu,
 	},
 	{
-		title: "Entregas",
-		url: "#",
+		title: "Entregadores",
+		url: "/entregadores",
 		icon: Bike,
+	},
+	{
+		title: "Histórico de Entregas",
+		url: "/historico",
+		icon: PackageCheckIcon,
 	},
 	{
 		title: "Ajuda",
