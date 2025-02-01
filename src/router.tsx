@@ -18,8 +18,6 @@ import Pedidos from "@/pages/protected/PedidosPage";
 import CreateItemPage from "@/pages/protected/CreateItemPage";
 import EditItemPage from "@/pages/protected/EditItemPage";
 import ItemListPage from "@/pages/protected/ItemListPage";
-
-import CreateDriverPage from "@/pages/protected/CreateDriverPage";
 import DriverListPage from "@/pages/protected/DriverListPage";
 
 const router = createBrowserRouter([
@@ -41,9 +39,6 @@ const router = createBrowserRouter([
 		path: "/logout",
 		element: <LogoutPage />,
 	},
-
-
-
 
 	// Grupo de Rotas Protegidas, adicionar novas como children
 	{
@@ -95,18 +90,12 @@ const router = createBrowserRouter([
 				),
 			},
 			{
-				path: "motoristas",
+				path: "entregadores",
 				element: (
 					<SidebarLayout>
 						<DriverListPage />
 					</SidebarLayout>
 				),
-			},
-			{
-				path: "criar-motorista",
-				element: <SidebarLayout>
-					<CreateDriverPage />
-				</SidebarLayout>
 			},
 		],
 	},

@@ -10,25 +10,35 @@ import { Instagram } from "lucide-react";
 export default function HomePage() {
 	return (
 		<div className="flex min-h-screen flex-col items-center bg-[#f9f5f1]">
-
 			<header className="w-full h-20 fixed top-0 left-0 right-0 z-50 flex justify-between items-center max-w-full mx-auto py-6 px-4 md:px-10 bg-[#F9F5F1]/50 backdrop-blur-md">
-
 				<div className="text-2xl font-bold flex items-center gap-2">
 					<img src={salveImage} alt="SalveFood" className="w-16 h-16" />
 					<span>SalveFood</span>
 				</div>
 
 				<nav className="flex gap-6 text-lg">
-					<a href="#" className="text-gray-700 px-3 py-2 rounded-md transition duration-300 hover:bg-orange-500 hover:bg-opacity-100 hover:text-white">
+					<a
+						href="#"
+						className="text-gray-700 px-3 py-2 rounded-md transition duration-300 hover:bg-orange-500 hover:bg-opacity-100 hover:text-white"
+					>
 						Home
 					</a>
-					<a href="#about" className="text-gray-700 px-3 py-2 rounded-md transition duration-300 hover:bg-orange-500 hover:bg-opacity-100 hover:text-white">
+					<a
+						href="#about"
+						className="text-gray-700 px-3 py-2 rounded-md transition duration-300 hover:bg-orange-500 hover:bg-opacity-100 hover:text-white"
+					>
 						Sobre
 					</a>
-					<a href="#features" className="text-gray-700 px-3 py-2 rounded-md transition duration-300 hover:bg-orange-500 hover:bg-opacity-100 hover:text-white">
+					<a
+						href="#features"
+						className="text-gray-700 px-3 py-2 rounded-md transition duration-300 hover:bg-orange-500 hover:bg-opacity-100 hover:text-white"
+					>
 						Recursos
 					</a>
-					<a href="#contact" className="text-gray-700 px-3 py-2 rounded-md transition duration-300 hover:bg-orange-500 hover:bg-opacity-100 hover:text-white">
+					<a
+						href="#contact"
+						className="text-gray-700 px-3 py-2 rounded-md transition duration-300 hover:bg-orange-500 hover:bg-opacity-100 hover:text-white"
+					>
 						Contato
 					</a>
 				</nav>
@@ -61,7 +71,11 @@ export default function HomePage() {
 				<section id="about" className="mt-16 text-center md:text-left">
 					<h2 className="text-3xl font-bold text-gray-900">Sobre o SalveFood</h2>
 					<p className="text-lg text-gray-600 mt-4">
-						SalveFood é um portal dedicado a conectar restaurantes e lanchonetes aos clientes, oferecendo uma plataforma fácil e rápida para empresas de alimentação se cadastrarem e gerenciarem seus pedidos. Nossa missão é ajudar pequenos e médios empresários a expandirem seu alcance e atenderem seus clientes de maneira eficiente, com a vantagem de contar com uma plataforma intuitiva e segura.
+						SalveFood é um portal dedicado a conectar restaurantes e lanchonetes aos clientes,
+						oferecendo uma plataforma fácil e rápida para empresas de alimentação se cadastrarem e
+						gerenciarem seus pedidos. Nossa missão é ajudar pequenos e médios empresários a
+						expandirem seu alcance e atenderem seus clientes de maneira eficiente, com a vantagem de
+						contar com uma plataforma intuitiva e segura.
 					</p>
 				</section>
 
@@ -82,10 +96,15 @@ export default function HomePage() {
 						</Card>
 						<Card>
 							<CardHeader>
-								<h3 className="text-xl font-semibold text-orange-500">Gestão de Pedidos Eficiente</h3>
+								<h3 className="text-xl font-semibold text-orange-500">
+									Gestão de Pedidos Eficiente
+								</h3>
 							</CardHeader>
 							<CardContent>
-								<p className="text-gray-600">Gerencie seus pedidos de forma simples e sem erros, garantindo agilidade no processo.</p>
+								<p className="text-gray-600">
+									Gerencie seus pedidos de forma simples e sem erros, garantindo agilidade no
+									processo.
+								</p>
 							</CardContent>
 						</Card>
 						<Card>
@@ -93,7 +112,10 @@ export default function HomePage() {
 								<h3 className="text-xl font-semibold text-orange-500">Apoio e Suporte</h3>
 							</CardHeader>
 							<CardContent>
-								<p className="text-gray-600">Conte com nosso suporte dedicado para ajudar sua empresa a crescer dentro da plataforma.</p>
+								<p className="text-gray-600">
+									Conte com nosso suporte dedicado para ajudar sua empresa a crescer dentro da
+									plataforma.
+								</p>
 							</CardContent>
 						</Card>
 					</div>
@@ -103,22 +125,23 @@ export default function HomePage() {
 					<h2 className="text-3xl font-bold text-gray-900">O que nossos clientes dizem</h2>
 					<ComentarioCarroussel />
 				</section>
-
-
 			</main>
 			<footer className="w-full py-4">
 				<div className="flex flex-col items-center max-w-full mx-auto px-4 md:px-10">
 					<span className="text-gray-700 mb-2">
 						Copyright ©2025 SalveFood. Todos os direitos reservados.
 					</span>
-					<a href="https://www.instagram.com/salvefood.ofc/" target="_blank" rel="noopener noreferrer">
+					<a
+						href="https://www.instagram.com/salvefood.ofc/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						<div>
 							<Instagram size={32} className="text-gray-700 hover:text-gray-900" />
 						</div>
 					</a>
 				</div>
 			</footer>
-
 		</div>
 	);
 }
