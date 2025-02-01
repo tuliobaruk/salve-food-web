@@ -1,4 +1,6 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import {
 	AlertDialog,
 	AlertDialogTrigger,
@@ -10,6 +12,9 @@ import {
 	AlertDialogAction,
 	AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
+import axiosInstance from "@/api/axiosConfig";
+import { Notificacao } from "@/context/Notificacao";
+import { toast } from "sonner";
 
 export default function Pedidos() {
 	const [pedidosPendentes, setPedidosPendentes] = useState([
@@ -79,11 +84,12 @@ export default function Pedidos() {
 			],
 		},
 	]);
-	const [pedidosAceitos, setPedidosAceitos] = useState([]);
-	const [pedidosAguardandoMotorista, setPedidosAguardandoMotorista] = useState([]);
-	const [modalPedido, setModalPedido] = useState(null);
-
-	const handleAcaoPedido = (acao, pedido) => {
+	const [pedidosAceitos, setPedidosAceitos] = useState<any[]>([]);
+	const [pedidosAguardandoMotorista, setPedidosAguardandoMotorista] = useState<any[]>([]);
+	const [modalPedido, setModalPedido] = useState<{ acao: string; pedido: any } | null>(null);
+	const [rotinaNotificacao, setRotinaNotificacao] = useState<NodeJS.Timeout | null>(null);
+	const [musica, setMusica] = useState<string | undefined>(undefined);
+	const handleAcaoPedido = (acao:any, pedido:any) => {
 		if (acao === "aceitar") {
 			setPedidosAceitos((prev) => [...prev, pedido]);
 			setPedidosPendentes((prev) => prev.filter((p) => p.id !== pedido.id));
@@ -93,11 +99,58 @@ export default function Pedidos() {
 		setModalPedido(null); // Fecha o modal após a ação
 	};
 
-	const handleFinalizarPedido = (pedido) => {
+	const handleFinalizarPedido = (pedido:any) => {
 		setPedidosAceitos((prev) => prev.filter((p) => p.id !== pedido.id));
 		setPedidosAguardandoMotorista((prev) => [...prev, pedido]);
 		alert(`Pedido #${pedido.id} foi finalizado.`);
 	};
+	const defineMusica = async () => {
+		setMusica((await axiosInstance.get("/api/loja/som")).data.link);
+		console.log(musica);
+	};
+	const getMusica = async () => {
+		if (musica) {
+			return musica;
+		} else {
+			const resp = await axiosInstance.get("/api/loja/som");
+			setMusica(resp.data.link);
+			return resp.data.link;
+		}
+	};
+	useEffect(() => {
+		// Definir a música ao carregar a página
+		defineMusica();
+	}, []);
+
+	const iniciarRotinaNotificacao = () => {
+		if (rotinaNotificacao) {
+			return;
+		}
+
+		setRotinaNotificacao(setInterval(async () => {
+			const resp = await axiosInstance.get("/api/notifications");
+			console.log("notifications");
+			if (resp.data.length > 0) {
+				
+				if (musica) {
+					const audio = new Audio(musica);
+					audio.play();
+				} else {
+					const audio = new Audio(await getMusica());
+					audio.play();
+					console.log("musica era pra ta tocando agora não?");
+				}
+			}
+			resp.data.forEach(async (notificacao: Notificacao) => {
+				toast.info(`Pedido #${notificacao.pedidoId} de ${notificacao.senderName}: ${notificacao.message}`);
+				await axiosInstance.delete(`/api/notifications/${notificacao.id}`);
+			});
+		}, 5000)); // Intervalo de 5 segundos, ajuste conforme necessário
+	};
+
+	useEffect(() => {
+		iniciarRotinaNotificacao();
+	}, [musica]); // Adicione 'musica' como dependência para garantir que a rotina seja iniciada após a música ser definida
 
 	return (
 		<div className="bg-gray-100 min-h-screen p-6">
@@ -202,7 +255,7 @@ export default function Pedidos() {
 										<strong>Pedido #{pedido.id}</strong> - {pedido.cliente}
 									</p>
 									<ul className="text-gray-500 text-sm">
-										{pedido.itens.map((item, index) => (
+										{pedido.itens.map((item:any, index:number) => (
 											<li key={index}>
 												{item.quantidade} x {item.nome}
 											</li>
@@ -233,7 +286,7 @@ export default function Pedidos() {
 										<strong>Pedido #{pedido.id}</strong> - {pedido.cliente}
 									</p>
 									<ul className="text-gray-500 text-sm">
-										{pedido.itens.map((item, index) => (
+										{pedido.itens.map((item:any, index:number) => (
 											<li key={index}>
 												{item.quantidade} x {item.nome}
 											</li>
