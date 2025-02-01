@@ -93,10 +93,10 @@ const router = createBrowserRouter([
 				path: "entregadores",
 				element: (
 					<SidebarLayout>
-						<DriverListPage/>
+						<DriverListPage />
 					</SidebarLayout>
-				)
-			}
+				),
+			},
 		],
 	},
 ]);

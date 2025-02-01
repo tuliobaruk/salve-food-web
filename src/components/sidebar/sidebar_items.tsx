@@ -1,4 +1,13 @@
-import { SquareMenu, Home, Inbox, Bike, Settings, LogOut, CircleHelp, PackageCheckIcon } from "lucide-react";
+import {
+	SquareMenu,
+	Home,
+	Inbox,
+	Bike,
+	Settings,
+	LogOut,
+	CircleHelp,
+	PackageCheckIcon,
+} from "lucide-react";
 
 // Menu items.
 export const topItems = [

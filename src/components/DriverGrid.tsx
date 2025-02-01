@@ -3,17 +3,18 @@ import { CardDriver } from "@/components/CardDriver";
 interface Driver {
 	id: number;
 	nome: string;
-	DriverImage: string;
+	image: string;
+	disponivel: boolean;
 }
 
 interface DriverGridProps {
-	drivers?: Driver[];
+	drivers: Driver[];
 	onEdit: (id: number) => void;
 	onRemove: (id: number) => void;
 }
 
-export function DriverGrid({ drivers = [], onEdit, onRemove }: DriverGridProps) {
-	if (drivers.length === 0) {
+export function DriverGrid({ drivers, onEdit, onRemove }: DriverGridProps) {
+	if (!Array.isArray(drivers) || drivers.length === 0) {
 		return <p className="text-center text-lg text-gray-500">Nenhum entregador encontrado.</p>;
 	}
 

@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { TrashIcon, EditIcon } from "lucide-react";
-import { Card, CardContent, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardTitle, CardFooter, CardDescription } from "@/components/ui/card";
 
 interface Driver {
 	id: number;
 	nome: string;
-	DriverImage: string;
+	image: string;
+	disponivel: boolean;
 }
 
 interface CardDriverProps {
@@ -19,7 +20,7 @@ export const CardDriver = ({ driver, onEdit, onRemove }: CardDriverProps) => {
 		<Card className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
 			<div className="relative">
 				<img
-					src={driver.DriverImage}
+					src={driver.image}
 					alt={driver.nome}
 					className="object-cover w-full h-64"
 					style={{ aspectRatio: "400/300", objectFit: "cover" }}
@@ -27,6 +28,9 @@ export const CardDriver = ({ driver, onEdit, onRemove }: CardDriverProps) => {
 			</div>
 			<CardContent className="bg-white p-4">
 				<CardTitle className="font-bold text-xl">{driver.nome}</CardTitle>
+				<CardDescription className="text-sm text-gray-500">
+					{driver.disponivel ? "Disponivel" : "Não disponivel"}
+				</CardDescription>
 
 				<CardFooter className="my-6">
 					<div className="absolute inset-0 z-20 flex justify-between items-end p-4">
