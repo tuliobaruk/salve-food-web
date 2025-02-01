@@ -18,7 +18,7 @@ import Pedidos from "@/pages/protected/PedidosPage";
 import CreateItemPage from "@/pages/protected/CreateItemPage";
 import EditItemPage from "@/pages/protected/EditItemPage";
 import ItemListPage from "@/pages/protected/ItemListPage";
-import DeliveryManListPage from "@/pages/protected/DeliveryManListPage";
+import DriverListPage from "@/pages/protected/DriverListPage";
 
 const router = createBrowserRouter([
 	// Rotas Públicas
@@ -93,7 +93,7 @@ const router = createBrowserRouter([
 				path: "entregadores",
 				element: (
 					<SidebarLayout>
-						<DeliveryManListPage/>
+						<DriverListPage/>
 					</SidebarLayout>
 				)
 			}
