@@ -8,6 +8,8 @@ export function createFormDataStoreRequest(values: CreateStoreFormValues): FormD
 	formData.append("nome", values.nome);
 	formData.append("descricao", values.descricao);
 	formData.append("segmentoLojaId", values.segmentoLojaId);
+	formData.append("diasFuncionamento", values.diasFuncionamento.join(","));
+	formData.append("tiposPagamento", values.tiposPagamento.join(","));
 	formData.append("rua", values.rua);
 	formData.append("bairro", values.bairro);
 	formData.append("numero", values.numero);
