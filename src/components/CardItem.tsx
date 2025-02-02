@@ -1,20 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { TrashIcon, EditIcon } from "lucide-react";
 import { Card, CardContent, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-
-interface CategoriaItem {
-	id: number;
-	nome: string;
-}
-
-interface Item {
-	id: number;
-	nome: string;
-	descricao: string;
-	valor: number;
-	itemImage: string;
-	categoriaItem: CategoriaItem;
-}
+import { Item } from "@/types/Item";
 
 interface CardItemProps {
 	item: Item;

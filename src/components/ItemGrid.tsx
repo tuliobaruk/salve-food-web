@@ -1,18 +1,5 @@
 import { CardItem } from "@/components/CardItem";
-
-interface CategoriaItem {
-	id: number;
-	nome: string;
-}
-
-interface Item {
-	id: number;
-	nome: string;
-	descricao: string;
-	valor: number;
-	itemImage: string;
-	categoriaItem: CategoriaItem;
-}
+import { Item } from "@/types/Item";
 
 interface ItemGridProps {
 	items: Item[];

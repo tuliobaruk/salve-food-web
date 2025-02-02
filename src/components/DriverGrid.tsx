@@ -1,11 +1,5 @@
 import { CardDriver } from "@/components/CardDriver";
-
-interface Driver {
-	id: number;
-	nome: string;
-	image: string;
-	disponivel: boolean;
-}
+import { Driver } from "@/types/Driver";
 
 interface DriverGridProps {
 	drivers: Driver[];

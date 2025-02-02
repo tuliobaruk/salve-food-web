@@ -1,13 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { TrashIcon, EditIcon } from "lucide-react";
 import { Card, CardContent, CardTitle, CardFooter, CardDescription } from "@/components/ui/card";
-
-interface Driver {
-	id: number;
-	nome: string;
-	image: string;
-	disponivel: boolean;
-}
+import { Driver } from "@/types/Driver";
 
 interface CardDriverProps {
 	driver: Driver;

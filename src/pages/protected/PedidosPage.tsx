@@ -42,7 +42,7 @@ import { Entregador } from "@/types/Entregador";
 import { EntregaFormData, Pedido } from "@/types/Pedido";
 import { toast } from "sonner";
 import axiosInstance from "@/api/axiosConfig";
-import { Notificacao } from "@/context/Notificacao";
+import { Notificacao } from "@/types/Notificacao";
 
 export default function Pedidos() {
 	const [pedidosPendentes, setPedidosPendentes] = useState<Pedido[]>([]);
