@@ -30,11 +30,11 @@ export interface Pedido {
 		id: number;
 		nome: string;
 	};
-  entregador: {
-    id: number
-    nome: string
-    disponivel: boolean
-  }
+	entregador: {
+		id: number;
+		nome: string;
+		disponivel: boolean;
+	};
 }
 
 export interface EntregaFormData {

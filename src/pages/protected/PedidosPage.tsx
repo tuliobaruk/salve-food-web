@@ -226,7 +226,7 @@ export default function Pedidos() {
 			);
 
 			toast.success(`Pedido #${pedidoId} entregue com sucesso`);
-      await fetchAllColumns();
+			await fetchAllColumns();
 			setShowEntregaModal(false);
 			setEntregaForm({ pedidoId: 0, senha: "" });
 		} catch (error) {
@@ -273,7 +273,7 @@ export default function Pedidos() {
 						audio.play();
 					}
 
-          let notificacao: Notificacao;
+					let notificacao: Notificacao;
 					for (notificacao of resp.data) {
 						toast.info(
 							`Pedido #${notificacao.pedidoId} de ${notificacao.senderName}: ${notificacao.message}`,
@@ -281,7 +281,7 @@ export default function Pedidos() {
 						await axiosInstance.delete(`/api/notifications/${notificacao.id}`);
 					}
 				}
-        await fetchAllColumns()
+				await fetchAllColumns();
 			} catch (error) {
 				console.error("Erro na rotina de notificação:", error);
 			}
@@ -318,19 +318,19 @@ export default function Pedidos() {
 		if (response) {
 			switch (column) {
 				case "pendentes":
-          await fetchAllColumns()
+					await fetchAllColumns();
 					setPedidosPendentes(response.content);
 					break;
 				case "aceitos":
-          await fetchAllColumns()
+					await fetchAllColumns();
 					setPedidosAceitos(response.content);
 					break;
 				case "aguardando":
-          await fetchAllColumns()
+					await fetchAllColumns();
 					setPedidosAguardandoMotorista(response.content);
 					break;
 				case "aCaminho":
-          await fetchAllColumns()
+					await fetchAllColumns();
 					setPedidosACaminho(response.content);
 					break;
 			}
@@ -425,10 +425,19 @@ export default function Pedidos() {
 							<li key={pedido.id} className="border rounded-lg p-4">
 								<div className="flex justify-between items-start mb-2">
 									<div>
-                  <p className="font-bold">Pedido #{pedido.id}</p>
-										<p className="text-sm text-gray-600"><span className="text-sm font-semibold">Cliente: </span>{getNomeCliente(pedido)}</p>
-										<p className="text-sm text-gray-600"><span className="text-sm font-semibold">Contato: </span>{pedido.criadoPor.phone}</p>
-                    <p className="text-sm text-gray-600"><span className="text-sm font-semibold">Data: </span>{pedido.dataPedido}</p>
+										<p className="font-bold">Pedido #{pedido.id}</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Cliente: </span>
+											{getNomeCliente(pedido)}
+										</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Contato: </span>
+											{pedido.criadoPor.phone}
+										</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Data: </span>
+											{pedido.dataPedido}
+										</p>
 									</div>
 									<p className="text-right font-bold">R$ {pedido.valorTotal.toFixed(2)}</p>
 								</div>
@@ -537,10 +546,19 @@ export default function Pedidos() {
 							<li key={pedido.id} className="border rounded-lg p-4">
 								<div className="flex justify-between items-start mb-2">
 									<div>
-                  <p className="font-bold">Pedido #{pedido.id}</p>
-										<p className="text-sm text-gray-600"><span className="text-sm font-semibold">Cliente: </span>{getNomeCliente(pedido)}</p>
-										<p className="text-sm text-gray-600"><span className="text-sm font-semibold">Contato: </span>{pedido.criadoPor.phone}</p>
-                    <p className="text-sm text-gray-600"><span className="text-sm font-semibold">Data: </span>{pedido.dataPedido}</p>
+										<p className="font-bold">Pedido #{pedido.id}</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Cliente: </span>
+											{getNomeCliente(pedido)}
+										</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Contato: </span>
+											{pedido.criadoPor.phone}
+										</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Data: </span>
+											{pedido.dataPedido}
+										</p>
 									</div>
 									<p className="text-right font-bold">R$ {pedido.valorTotal.toFixed(2)}</p>
 								</div>
@@ -590,10 +608,18 @@ export default function Pedidos() {
 								<div className="flex justify-between items-start mb-2">
 									<div>
 										<p className="font-bold">Pedido #{pedido.id}</p>
-										<p className="text-sm text-gray-600"><span className="text-sm font-semibold">Cliente: </span>{getNomeCliente(pedido)}</p>
-										<p className="text-sm text-gray-600"><span className="text-sm font-semibold">Contato: </span>{pedido.criadoPor.phone}</p>
-                    <p className="text-sm text-gray-600"><span className="text-sm font-semibold">Data: </span>{pedido.dataPedido}</p>
-
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Cliente: </span>
+											{getNomeCliente(pedido)}
+										</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Contato: </span>
+											{pedido.criadoPor.phone}
+										</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Data: </span>
+											{pedido.dataPedido}
+										</p>
 									</div>
 									<p className="text-right font-bold">R$ {pedido.valorTotal.toFixed(2)}</p>
 								</div>
@@ -669,11 +695,21 @@ export default function Pedidos() {
 								<div className="flex justify-between items-start mb-2">
 									<div>
 										<p className="font-bold">Pedido #{pedido.id}</p>
-										<p className="text-sm text-gray-600"><span className="text-sm font-semibold">Cliente: </span>{getNomeCliente(pedido)}</p>
-										<p className="text-sm text-gray-600"><span className="text-sm font-semibold">Contato: </span>{pedido.criadoPor.phone}</p>
-										<p className="text-sm text-gray-600"><span className="text-sm font-semibold">Data: </span> {pedido.dataPedido}</p>
-                    <p className="text-sm text-gray-600"><span className="text-sm font-semibold">Entregador: </span>{pedido.entregador?.nome || "indefinido"}</p>
-
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Cliente: </span>
+											{getNomeCliente(pedido)}
+										</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Contato: </span>
+											{pedido.criadoPor.phone}
+										</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Data: </span> {pedido.dataPedido}
+										</p>
+										<p className="text-sm text-gray-600">
+											<span className="text-sm font-semibold">Entregador: </span>
+											{pedido.entregador?.nome || "indefinido"}
+										</p>
 									</div>
 									<p className="text-right font-bold">R$ {pedido.valorTotal.toFixed(2)}</p>
 								</div>
