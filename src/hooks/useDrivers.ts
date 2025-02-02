@@ -17,7 +17,7 @@ export function useDrivers(lojaId: number | undefined) {
 		const fetchDriver = async () => {
 			setLoading(true);
 			try {
-				const response = await axiosInstance.get(`/api/entregador/meus`);
+				const response = await axiosInstance.get(`/api/entregador/${lojaId}`);
 				setDrivers(Array.isArray(response.data) ? response.data : []);
 			} catch (error) {
 				toast.error("Erro ao carregar os entregadores.");
