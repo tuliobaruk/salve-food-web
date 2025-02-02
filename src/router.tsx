@@ -20,6 +20,8 @@ import EditItemPage from "@/pages/protected/EditItemPage";
 import ItemListPage from "@/pages/protected/ItemListPage";
 import DriverListPage from "@/pages/protected/DriverListPage";
 import CreateDriverPage from "@/pages/protected/CreateDriverPage";
+import EditDriverPage from "@/pages/protected/EditDriverPage";
+import HistoryPage from "@/pages/protected/HistoryPage";
 
 const router = createBrowserRouter([
 	// Rotas Públicas
@@ -103,6 +105,22 @@ const router = createBrowserRouter([
 				element: (
 					<SidebarLayout>
 						<CreateDriverPage />
+					</SidebarLayout>
+				),
+			},
+			{
+				path: "editar-entregador/:id",
+				element: (
+					<SidebarLayout>
+						<EditDriverPage />
+					</SidebarLayout>
+				),
+			},
+			{
+				path: "historico",
+				element: (
+					<SidebarLayout>
+						<HistoryPage />
 					</SidebarLayout>
 				),
 			},

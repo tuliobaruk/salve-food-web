@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/axiosConfig";
 import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 interface Driver {
 	id: number;
@@ -20,9 +21,13 @@ export function useDrivers(lojaId: number | undefined) {
 				const response = await axiosInstance.get(`/api/entregador/${lojaId}`);
 				setDrivers(Array.isArray(response.data) ? response.data : []);
 			} catch (error) {
-				toast.error("Erro ao carregar os entregadores.");
-				console.error(error);
-				setDrivers([]);
+				if (error instanceof AxiosError) {
+					if (error.response?.status !== 404) {
+						toast.error("Erro ao carregar os entregadores.");
+						console.error(error);
+					}
+					setDrivers([]);
+				}
 			} finally {
 				setLoading(false);
 			}
