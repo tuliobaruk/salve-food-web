@@ -76,8 +76,8 @@ export default function Pedidos() {
 			setLoading(true);
 			const response = await fetchPedidoData(status, page);
 			return response;
-		} catch (error) {
-			toast.error(`Erro ao carregar pedidos ${status}`);
+		} catch (error: any) {
+			toast.error(error.details);
 			return null;
 		}
 	};
@@ -137,8 +137,8 @@ export default function Pedidos() {
 					},
 				}));
 			}
-		} catch (error) {
-			toast.error("Erro ao carregar pedidos");
+		} catch (error: any) {
+			toast.error(error.details);
 		} finally {
 			setLoading(false);
 		}
@@ -149,8 +149,8 @@ export default function Pedidos() {
 			setLoadingEntregadores(true);
 			const response = await buscarEntregadores();
 			setEntregadores(response);
-		} catch (error) {
-			toast.error("Erro ao carregar entregadores");
+		} catch (error: any) {
+			toast.error(error.details);
 		} finally {
 			setLoadingEntregadores(false);
 		}
@@ -201,8 +201,8 @@ export default function Pedidos() {
 
 			toast.success(`Entregador definido para o pedido #${pedido.id}`);
 			setSelectedEntregador("");
-		} catch (error) {
-			toast.error("Erro ao definir entregador");
+		} catch (error: any) {
+			toast.error(error.details);
 		} finally {
 			setLoading(false);
 		}
@@ -232,8 +232,8 @@ export default function Pedidos() {
 			await fetchAllColumns();
 			setShowEntregaModal(false);
 			setEntregaForm({ pedidoId: 0, senha: "" });
-		} catch (error) {
-			toast.error("Erro ao confirmar entrega do pedido");
+		} catch (error: any) {
+			toast.error(error.details);
 			console.error("Erro detalhado:", error);
 		} finally {
 			setLoading(false);
@@ -277,7 +277,7 @@ export default function Pedidos() {
 							audio.play();
 
 						}catch(error:any){
-							console.error("Erro ao tocar música:", error.message);
+							console.error("Erro ao tocar música:", error.details);
 						}
 					}
 

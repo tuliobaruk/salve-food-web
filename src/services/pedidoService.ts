@@ -82,9 +82,8 @@ export const pedidoEntregue = async (pedidoId: number, entregadorId: number, sen
 			},
 		);
 		return response.data;
-	} catch (error) {
-		console.error("Erro ao finalizar pedido:", error);
-		throw new Error("Não foi possível finalizar o pedido.");
+	} catch (error: any) {
+		throw error.response.data.error;
 	}
 };
 
