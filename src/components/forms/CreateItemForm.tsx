@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/file-upload";
 
 import { CreateItemSchema } from "@/schema/zodSchemas";
+import MoneyInput from "@/components/ui/money-input";
 type CreateItemFormValues = z.infer<typeof CreateItemSchema>;
 
 interface CreateItemFormProps {
@@ -137,7 +138,12 @@ export default function CreateItemForm({ categorias, loading, onSubmit }: Create
 						<FormItem>
 							<FormLabel>Valor</FormLabel>
 							<FormControl>
-								<Input placeholder="" type="text" {...field} />
+								<MoneyInput
+									form={form}
+									label="Valor"
+									name="valor"
+									placeholder="Preço do item no cardápio"
+								/>
 							</FormControl>
 							<FormDescription>Preço do item no cardápio</FormDescription>
 							<FormMessage />
