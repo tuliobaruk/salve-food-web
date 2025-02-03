@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Pagination } from "@/components/Pagination";
 import {
@@ -179,7 +182,7 @@ export default function Pedidos() {
 			setPedidosAceitos((prev) => prev.filter((p) => p.id !== pedido.id));
 			setPedidosAguardandoMotorista((prev) => [...prev, pedido]);
 			toast.success(`Pedido #${pedido.id} finalizado e aguardando entregador`);
-		} catch (error) {
+		} catch (error:any) {
 			toast.error("Erro ao finalizar pedido");
 		} finally {
 			setLoading(false);
@@ -269,8 +272,13 @@ export default function Pedidos() {
 						const audio = new Audio(musica);
 						audio.play();
 					} else {
-						const audio = new Audio(await getMusica());
-						audio.play();
+						try{
+							const audio = new Audio(await getMusica());
+							audio.play();
+
+						}catch(error:any){
+							console.error("Erro ao tocar música:", error.message);
+						}
 					}
 
 					let notificacao: Notificacao;
