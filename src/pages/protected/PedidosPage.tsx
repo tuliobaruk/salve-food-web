@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pagination } from "@/components/Pagination";
 import {
 	AlertDialog,
@@ -52,7 +52,6 @@ export default function Pedidos() {
 	const [pedidosAceitos, setPedidosAceitos] = useState<Pedido[]>([]);
 	const [pedidosAguardandoMotorista, setPedidosAguardandoMotorista] = useState<Pedido[]>([]);
 	const [modalPedido, setModalPedido] = useState<{ acao: string; pedido: Pedido } | null>(null);
-	const [rotinaNotificacao, setRotinaNotificacao] = useState<NodeJS.Timeout | null>(null);
 	const [musica, setMusica] = useState<string | undefined>(undefined);
 	const [loading, setLoading] = useState(false);
 	const [showEntregaModal, setShowEntregaModal] = useState(false);
@@ -71,6 +70,9 @@ export default function Pedidos() {
 		aCaminho: { currentPage: 0, totalPages: 0 },
 	});
 
+	const intervalRef = useRef<NodeJS.Timeout | null>(null);
+	const isMounted = useRef(false);
+
 	const handleFetchPedido = async (status: string, page: number) => {
 		try {
 			setLoading(true);
@@ -83,64 +85,27 @@ export default function Pedidos() {
 	};
 
 	const fetchAllColumns = async () => {
+		if (!isMounted.current) return;
+
 		try {
 			setLoading(true);
+			const [pendentes, aceitos, aguardando, aCaminho] = await Promise.all([
+				fetchPedidoData("PENDENTE", paginationState.pendentes.currentPage),
+				fetchPedidoData("PREPARANDO", paginationState.aceitos.currentPage),
+				fetchPedidoData("AGUARDANDO_ENTREGADOR", paginationState.aguardando.currentPage),
+				fetchPedidoData("A_CAMINHO", paginationState.aCaminho.currentPage),
+			]);
 
-			const [pendenteResponse, aceitosResponse, aguardandoResponse, aCaminhoResponse] =
-				await Promise.all([
-					handleFetchPedido("PENDENTE", paginationState.pendentes.currentPage),
-					handleFetchPedido("PREPARANDO", paginationState.aceitos.currentPage),
-					handleFetchPedido("AGUARDANDO_ENTREGADOR", paginationState.aguardando.currentPage),
-					handleFetchPedido("A_CAMINHO", paginationState.aCaminho.currentPage),
-				]);
-
-			if (pendenteResponse) {
-				setPedidosPendentes(pendenteResponse.content);
-				setPaginationState((prev) => ({
-					...prev,
-					pendentes: {
-						...prev.pendentes,
-						totalPages: pendenteResponse.totalPages,
-					},
-				}));
-			}
-
-			if (aceitosResponse) {
-				setPedidosAceitos(aceitosResponse.content);
-				setPaginationState((prev) => ({
-					...prev,
-					aceitos: {
-						...prev.aceitos,
-						totalPages: aceitosResponse.totalPages,
-					},
-				}));
-			}
-
-			if (aguardandoResponse) {
-				setPedidosAguardandoMotorista(aguardandoResponse.content);
-				setPaginationState((prev) => ({
-					...prev,
-					aguardando: {
-						...prev.aguardando,
-						totalPages: aguardandoResponse.totalPages,
-					},
-				}));
-			}
-
-			if (aCaminhoResponse) {
-				setPedidosACaminho(aCaminhoResponse.content);
-				setPaginationState((prev) => ({
-					...prev,
-					aCaminho: {
-						...prev.aCaminho,
-						totalPages: aCaminhoResponse.totalPages,
-					},
-				}));
+			if (isMounted.current) {
+				setPedidosPendentes(pendentes?.content || []);
+				setPedidosAceitos(aceitos?.content || []);
+				setPedidosAguardandoMotorista(aguardando?.content || []);
+				setPedidosACaminho(aCaminho?.content || []);
 			}
 		} catch (error: any) {
 			toast.error(error.details);
 		} finally {
-			setLoading(false);
+			if (isMounted.current) setLoading(false);
 		}
 	};
 
@@ -259,42 +224,31 @@ export default function Pedidos() {
 	};
 
 	const iniciarRotinaNotificacao = () => {
-		if (rotinaNotificacao) {
-			clearInterval(rotinaNotificacao);
+		if (intervalRef.current) {
+			clearInterval(intervalRef.current);
 		}
 
-		const novaRotina = setInterval(async () => {
+		intervalRef.current = setInterval(async () => {
+			if (!isMounted.current) return;
+
 			try {
 				const resp = await axiosInstance.get("/api/notifications");
-
 				if (resp.data.length > 0) {
-					if (musica) {
-						const audio = new Audio(musica);
-						audio.play();
-					} else {
-						try {
-							const audio = new Audio(await getMusica());
-							audio.play();
-						} catch (error: any) {
-							console.error("Erro ao tocar música:", error.details);
-						}
-					}
+					const audio = new Audio(musica || (await getMusica()));
+					audio.play();
 
-					let notificacao: Notificacao;
-					for (notificacao of resp.data) {
+					resp.data.forEach(async (notificacao: Notificacao) => {
 						toast.info(
 							`Pedido #${notificacao.pedidoId} de ${notificacao.senderName}: ${notificacao.message}`,
 						);
 						await axiosInstance.delete(`/api/notifications/${notificacao.id}`);
-					}
+					});
 				}
 				await fetchAllColumns();
 			} catch (error) {
 				console.error("Erro na rotina de notificação:", error);
 			}
 		}, 5000);
-
-		setRotinaNotificacao(novaRotina);
 	};
 
 	const handleColumnPageChange = async (
@@ -345,25 +299,19 @@ export default function Pedidos() {
 	};
 
 	useEffect(() => {
+		isMounted.current = true;
 		fetchAllColumns();
 		defineMusica();
 		carregarEntregadores();
+		iniciarRotinaNotificacao();
 
 		return () => {
-			if (rotinaNotificacao) {
-				clearInterval(rotinaNotificacao);
+			isMounted.current = false;
+			if (intervalRef.current) {
+				clearInterval(intervalRef.current);
 			}
 		};
 	}, []);
-
-	useEffect(() => {
-		iniciarRotinaNotificacao();
-		return () => {
-			if (rotinaNotificacao) {
-				clearInterval(rotinaNotificacao);
-			}
-		};
-	}, [musica]);
 
 	const abrirModalEntrega = (pedido: Pedido) => {
 		if (pedido.status === "A_CAMINHO") {
