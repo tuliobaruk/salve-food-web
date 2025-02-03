@@ -182,7 +182,7 @@ export default function Pedidos() {
 			setPedidosAceitos((prev) => prev.filter((p) => p.id !== pedido.id));
 			setPedidosAguardandoMotorista((prev) => [...prev, pedido]);
 			toast.success(`Pedido #${pedido.id} finalizado e aguardando entregador`);
-		} catch (error:any) {
+		} catch (error: any) {
 			toast.error("Erro ao finalizar pedido");
 		} finally {
 			setLoading(false);
@@ -272,11 +272,10 @@ export default function Pedidos() {
 						const audio = new Audio(musica);
 						audio.play();
 					} else {
-						try{
+						try {
 							const audio = new Audio(await getMusica());
 							audio.play();
-
-						}catch(error:any){
+						} catch (error: any) {
 							console.error("Erro ao tocar música:", error.details);
 						}
 					}
@@ -538,11 +537,13 @@ export default function Pedidos() {
 						<p className="text-center text-gray-500">Nenhum pedido pendente</p>
 					)}
 					<div className="mt-4">
-						<Pagination
-							currentPage={paginationState.pendentes.currentPage}
-							totalPages={paginationState.pendentes.totalPages}
-							onPageChange={(page) => handleColumnPageChange("pendentes", page)}
-						/>
+						{paginationState.pendentes.totalPages > 1 && (
+							<Pagination
+								currentPage={paginationState.pendentes.currentPage}
+								totalPages={paginationState.pendentes.totalPages}
+								onPageChange={(page) => handleColumnPageChange("pendentes", page)}
+							/>
+						)}
 					</div>
 				</div>
 
@@ -599,11 +600,13 @@ export default function Pedidos() {
 						<p className="text-center text-gray-500">Nenhum pedido em preparo</p>
 					)}
 					<div className="mt-4">
-						<Pagination
-							currentPage={paginationState.aceitos.currentPage}
-							totalPages={paginationState.aceitos.totalPages}
-							onPageChange={(page) => handleColumnPageChange("aceitos", page)}
-						/>
+						{paginationState.aceitos.totalPages > 1 && (
+							<Pagination
+								currentPage={paginationState.aceitos.currentPage}
+								totalPages={paginationState.aceitos.totalPages}
+								onPageChange={(page) => handleColumnPageChange("aceitos", page)}
+							/>
+						)}
 					</div>
 				</div>
 
@@ -682,11 +685,13 @@ export default function Pedidos() {
 						<p className="text-center text-gray-500">Nenhum pedido aguardando motorista</p>
 					)}
 					<div className="mt-4">
-						<Pagination
-							currentPage={paginationState.aguardando.currentPage}
-							totalPages={paginationState.aguardando.totalPages}
-							onPageChange={(page) => handleColumnPageChange("aguardando", page)}
-						/>
+						{paginationState.aguardando.totalPages > 1 && (
+							<Pagination
+								currentPage={paginationState.aguardando.currentPage}
+								totalPages={paginationState.aguardando.totalPages}
+								onPageChange={(page) => handleColumnPageChange("aguardando", page)}
+							/>
+						)}
 					</div>
 				</div>
 
@@ -740,11 +745,13 @@ export default function Pedidos() {
 						<p className="text-center text-gray-500">Nenhum pedido a caminho ou Finalizado</p>
 					)}
 					<div className="mt-4">
-						<Pagination
-							currentPage={paginationState.aCaminho.currentPage}
-							totalPages={paginationState.aCaminho.totalPages}
-							onPageChange={(page) => handleColumnPageChange("aCaminho", page)}
-						/>
+						{paginationState.aCaminho.totalPages > 1 && (
+							<Pagination
+								currentPage={paginationState.aCaminho.currentPage}
+								totalPages={paginationState.aCaminho.totalPages}
+								onPageChange={(page) => handleColumnPageChange("aCaminho", page)}
+							/>
+						)}
 					</div>
 				</div>
 			</div>

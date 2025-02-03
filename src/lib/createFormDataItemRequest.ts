@@ -8,7 +8,7 @@ export function createFormDataItemRequest(values: CreateItemFormValues): FormDat
 	formData.append("nome", values.nome);
 	formData.append("descricao", values.descricao);
 	formData.append("categoriaItemId", values.categoriaItemId);
-  formData.append("valor", values.valor.replace(/[^0-9.]/g, "").trim());
+	formData.append("valor", values.valor.replace(/[^0-9.]/g, "").trim());
 	if (values.file instanceof File) {
 		formData.append("file", values.file);
 	} else {
