@@ -21,7 +21,7 @@ export const CardItem = ({ item, onEdit, onRemove }: CardItemProps) => {
 				/>
 
 				<div className="absolute top-2 right-2 bg-black bg-opacity-80 text-white px-4 py-2 rounded-lg shadow-lg">
-					R$ {item.valor.toFixed(2)}
+					R$ {item.valor}
 				</div>
 			</div>
 			<CardContent className="bg-white p-4">
