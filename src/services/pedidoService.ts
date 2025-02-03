@@ -3,12 +3,7 @@ import axiosInstance from "@/api/axiosConfig";
 export const fetchPedidoData = async (status: string, page: number = 0, size: number = 5) => {
 	try {
 		const response = await axiosInstance.get(
-			`/api/pedidos/loja/status/${status}?page=${page}&size=${size}`,
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-				},
-			},
+			`/api/pedidos/loja/status/${status}?page=${page}&size=${size}`
 		);
 		return response.data;
 	} catch (error) {
@@ -19,11 +14,7 @@ export const fetchPedidoData = async (status: string, page: number = 0, size: nu
 
 export const buscarEntregadores = async () => {
 	try {
-		const response = await axiosInstance.get(`/api/entregador/meus`, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-			},
-		});
+		const response = await axiosInstance.get(`/api/entregador/meus`);
 		return response.data;
 	} catch (error) {
 		console.error("Erro ao buscar entregadores:", error);
@@ -35,12 +26,7 @@ export const alterarStatusEntregador = async (entregadorId: number, disponivel: 
 	try {
 		const response = await axiosInstance.patch(
 			`/api/entregador/${entregadorId}/status?disponivel=${disponivel}`,
-			{},
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-				},
-			},
+			{}
 		);
 		return response.data;
 	} catch (error) {
@@ -53,12 +39,7 @@ export const aceitarPedido = async (pedidoId: number) => {
 	try {
 		const response = await axiosInstance.put(
 			`/api/pedidos/${pedidoId}/preparando`,
-			{},
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-				},
-			},
+			{}
 		);
 		return response.data;
 	} catch (error) {
@@ -74,12 +55,7 @@ export const pedidoEntregue = async (pedidoId: number, entregadorId: number, sen
 			{
 				idEntregador: entregadorId,
 				senha,
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-				},
-			},
+			}
 		);
 		return response.data;
 	} catch (error: any) {
@@ -91,12 +67,7 @@ export const pedidoCancelado = async (pedidoId: number) => {
 	try {
 		const response = await axiosInstance.put(
 			`/api/pedidos/${pedidoId}/cancelado`,
-			{},
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-				},
-			},
+			{}
 		);
 		return response.data;
 	} catch (error) {
@@ -109,12 +80,7 @@ export const aguardandoEntregador = async (pedidoId: number) => {
 	try {
 		const response = await axiosInstance.put(
 			`/api/pedidos/${pedidoId}/aguardando-entregador`,
-			{},
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-				},
-			},
+			{}
 		);
 		return response.data;
 	} catch (error) {
@@ -129,12 +95,7 @@ export const definirEntregador = async (pedidoId: number, entregadorId: number) 
 			`/api/pedidos/${pedidoId}/entregador/${entregadorId}`,
 			{
 				entregadorId,
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-				},
-			},
+			}
 		);
 		return response.data;
 	} catch (error) {
