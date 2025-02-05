@@ -3,7 +3,7 @@ import axiosInstance from "@/api/axiosConfig";
 export const fetchPedidoData = async (status: string, page: number = 0, size: number = 5) => {
 	try {
 		const response = await axiosInstance.get(
-			`/api/pedidos/loja/status/${status}?page=${page}&size=${size}`
+			`/api/pedidos/loja/status/${status}?page=${page}&size=${size}`,
 		);
 		return response.data;
 	} catch (error) {
@@ -26,7 +26,7 @@ export const alterarStatusEntregador = async (entregadorId: number, disponivel: 
 	try {
 		const response = await axiosInstance.patch(
 			`/api/entregador/${entregadorId}/status?disponivel=${disponivel}`,
-			{}
+			{},
 		);
 		return response.data;
 	} catch (error) {
@@ -37,10 +37,7 @@ export const alterarStatusEntregador = async (entregadorId: number, disponivel: 
 
 export const aceitarPedido = async (pedidoId: number) => {
 	try {
-		const response = await axiosInstance.put(
-			`/api/pedidos/${pedidoId}/preparando`,
-			{}
-		);
+		const response = await axiosInstance.put(`/api/pedidos/${pedidoId}/preparando`, {});
 		return response.data;
 	} catch (error) {
 		console.error("Erro ao aceitar pedido:", error);
@@ -50,13 +47,10 @@ export const aceitarPedido = async (pedidoId: number) => {
 
 export const pedidoEntregue = async (pedidoId: number, entregadorId: number, senha: string) => {
 	try {
-		const response = await axiosInstance.put(
-			`/api/pedidos/${pedidoId}/entregue`,
-			{
-				idEntregador: entregadorId,
-				senha,
-			}
-		);
+		const response = await axiosInstance.put(`/api/pedidos/${pedidoId}/entregue`, {
+			idEntregador: entregadorId,
+			senha,
+		});
 		return response.data;
 	} catch (error: any) {
 		throw error.response.data.error;
@@ -65,10 +59,7 @@ export const pedidoEntregue = async (pedidoId: number, entregadorId: number, sen
 
 export const pedidoCancelado = async (pedidoId: number) => {
 	try {
-		const response = await axiosInstance.put(
-			`/api/pedidos/${pedidoId}/cancelado`,
-			{}
-		);
+		const response = await axiosInstance.put(`/api/pedidos/${pedidoId}/cancelado`, {});
 		return response.data;
 	} catch (error) {
 		console.error("Erro ao cancelar pedido:", error);
@@ -78,10 +69,7 @@ export const pedidoCancelado = async (pedidoId: number) => {
 
 export const aguardandoEntregador = async (pedidoId: number) => {
 	try {
-		const response = await axiosInstance.put(
-			`/api/pedidos/${pedidoId}/aguardando-entregador`,
-			{}
-		);
+		const response = await axiosInstance.put(`/api/pedidos/${pedidoId}/aguardando-entregador`, {});
 		return response.data;
 	} catch (error) {
 		console.error("Erro ao aguardar entregador:", error);
@@ -95,7 +83,7 @@ export const definirEntregador = async (pedidoId: number, entregadorId: number) 
 			`/api/pedidos/${pedidoId}/entregador/${entregadorId}`,
 			{
 				entregadorId,
-			}
+			},
 		);
 		return response.data;
 	} catch (error) {

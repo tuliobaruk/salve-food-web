@@ -1,3 +1,14 @@
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { TrashIcon, EditIcon } from "lucide-react";
 import { Card, CardContent, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
@@ -41,13 +52,32 @@ export const CardItem = ({ item, onEdit, onRemove }: CardItemProps) => {
 							<EditIcon /> Editar
 						</Button>
 
-						<Button
-							variant="outline"
-							onClick={() => onRemove(item.id)}
-							className="flex items-center gap-2 text-red-600"
-						>
-							<TrashIcon /> Remover
-						</Button>
+						<AlertDialog>
+							<AlertDialogTrigger asChild>
+								<Button variant="outline" className="flex items-center gap-2 text-red-600">
+									<TrashIcon /> Remover
+								</Button>
+							</AlertDialogTrigger>
+							<AlertDialogContent>
+								<AlertDialogHeader>
+									<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+									<AlertDialogDescription>
+										Esta ação não pode ser desfeita, isto irá deletar permanentemente este item do
+										seu cardápio.
+									</AlertDialogDescription>
+								</AlertDialogHeader>
+								<AlertDialogFooter>
+									<AlertDialogCancel>Cancelar</AlertDialogCancel>
+									<AlertDialogAction
+										className="flex items-center gap-1 text-red-600 bg-white"
+										onClick={() => onRemove(item.id)}
+									>
+										<TrashIcon />
+										Remover
+									</AlertDialogAction>
+								</AlertDialogFooter>
+							</AlertDialogContent>
+						</AlertDialog>
 					</div>
 				</CardFooter>
 			</CardContent>
