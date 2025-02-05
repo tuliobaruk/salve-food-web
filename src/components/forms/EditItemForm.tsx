@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +30,7 @@ import {
 } from "@/components/ui/file-upload";
 
 import { CreateItemSchema } from "@/schema/zodSchemas";
+import MoneyInput from "@/components/ui/money-input";
 type EditItemFormValues = z.infer<typeof CreateItemSchema>;
 
 interface EditItemFormProps {
@@ -144,7 +146,12 @@ export default function EditItemForm({ item, categorias, loading, onSubmit }: Ed
 						<FormItem>
 							<FormLabel>Valor</FormLabel>
 							<FormControl>
-								<Input placeholder="" type="text" {...field} />
+								<MoneyInput
+									form={form}
+									label="Valor"
+									name="valor"
+									placeholder="Preço do item no cardápio"
+								/>
 							</FormControl>
 							<FormDescription>Preço do item no cardápio</FormDescription>
 							<FormMessage />

@@ -52,6 +52,7 @@ export const pedidoEntregue = async (pedidoId: number, entregadorId: number, sen
 			senha,
 		});
 		return response.data;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (error: any) {
 		throw error.response.data.error;
 	}
