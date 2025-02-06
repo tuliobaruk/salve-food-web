@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useLoja } from "@/context/LojaContext";
+import  { AxiosError } from 'axios';
 
 export default function LoginPage() {
 	const navigate = useNavigate();
@@ -34,7 +35,14 @@ export default function LoginPage() {
 				navigate("/criar-loja");
 			}
 		} catch (error) {
-			console.error("Falha ao logar", error);
+			if (error instanceof AxiosError) {
+				const errorMessage = error.response?.data?.message || "Erro desconhecido ao logar.";
+				toast.error(errorMessage);
+				console.error("Falha ao logar", error.response?.data);
+			} else {
+				toast.error("Ocorreu um erro inesperado.");
+				console.error("Erro inesperado", error);
+			}
 		}
 	};
 

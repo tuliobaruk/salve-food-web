@@ -1,4 +1,7 @@
-import axios from "@/api/axiosConfig";
+import axiosInstance from "@/api/axiosConfig";
+import axios from "axios";
+
+const API_ENDPOINT_URL = import.meta.env.VITE_APP_BACKEND_IP;
 
 interface AuthResponse {
 	access_token: string;
@@ -9,12 +12,12 @@ interface AuthResponse {
 }
 
 export const login = async (username: string, password: string): Promise<AuthResponse> => {
-	const response = await axios.post<AuthResponse>("/api/auth/login", { username, password });
+	const response = await axios.post<AuthResponse>(`http://${API_ENDPOINT_URL}/api/auth/login`, { username, password });
 	return response.data;
 };
 
 export const doTokenRefresh = async (refreshToken: string): Promise<AuthResponse> => {
-	const response = await axios.post<AuthResponse>("/api/auth/refresh", {
+	const response = await axiosInstance.post<AuthResponse>("/api/auth/refresh", {
 		refreshToken: refreshToken,
 	});
 	return response.data;
@@ -22,13 +25,13 @@ export const doTokenRefresh = async (refreshToken: string): Promise<AuthResponse
 
 export const setSession = (accessToken: string | null, refreshToken: string | null) => {
 	if (accessToken) {
-		axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+		axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 		localStorage.setItem("access_token", accessToken);
 		if (refreshToken) {
 			localStorage.setItem("refresh_token", refreshToken);
 		}
 	} else {
-		delete axios.defaults.headers.common["Authorization"];
+		delete axiosInstance.defaults.headers.common["Authorization"];
 		localStorage.removeItem("access_token");
 		localStorage.removeItem("refresh_token");
 		localStorage.removeItem("user");
@@ -81,6 +84,6 @@ export interface UserIntrospectionResponse {
 }
 
 export const introspect = async (): Promise<UserIntrospectionResponse> => {
-	const response = await axios.get<UserIntrospectionResponse>("/api/auth/introspect");
+	const response = await axiosInstance.get<UserIntrospectionResponse>("/api/auth/introspect");
 	return response.data;
 };
