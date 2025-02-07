@@ -1,5 +1,17 @@
 import axiosInstance from "@/api/axiosConfig";
 
+export const fetchTodosPedidos = async () => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/pedidos/loja`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar pedidos:", error);
+    throw new Error("Não foi possível carregar os pedidos.");
+  }
+}
+
 export const fetchPedidoData = async (status: string, page: number = 0, size: number = 5) => {
 	try {
 		const response = await axiosInstance.get(
