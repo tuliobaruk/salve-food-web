@@ -605,7 +605,12 @@ export default function Pedidos() {
 											<SelectValue placeholder="Selecionar entregador" />
 										</SelectTrigger>
 										<SelectContent>
-											{entregadores
+                      
+											{entregadores.length === 0 ? (
+												<SelectItem value="none" disabled className="flex items-center gap-2 p-2">
+													<span>Nenhum entregador disponível</span>
+												</SelectItem>
+											) :entregadores
 												.filter((entregador) => entregador.disponivel)
 												.map((entregador) => (
 													<SelectItem
