@@ -605,29 +605,30 @@ export default function Pedidos() {
 											<SelectValue placeholder="Selecionar entregador" />
 										</SelectTrigger>
 										<SelectContent>
-                      
 											{entregadores.length === 0 ? (
 												<SelectItem value="none" disabled className="flex items-center gap-2 p-2">
 													<span>Nenhum entregador disponível</span>
 												</SelectItem>
-											) :entregadores
-												.filter((entregador) => entregador.disponivel)
-												.map((entregador) => (
-													<SelectItem
-														key={entregador.id}
-														value={entregador.id.toString()}
-														className="flex items-center gap-2 p-2"
-													>
-														<div className="flex items-center gap-2">
-															<img
-																src={entregador.image}
-																alt={entregador.nome}
-																className="w-8 h-8 rounded-full object-cover"
-															/>
-															<span>{entregador.nome}</span>
-														</div>
-													</SelectItem>
-												))}
+											) : (
+												entregadores
+													.filter((entregador) => entregador.disponivel)
+													.map((entregador) => (
+														<SelectItem
+															key={entregador.id}
+															value={entregador.id.toString()}
+															className="flex items-center gap-2 p-2"
+														>
+															<div className="flex items-center gap-2">
+																<img
+																	src={entregador.image}
+																	alt={entregador.nome}
+																	className="w-8 h-8 rounded-full object-cover"
+																/>
+																<span>{entregador.nome}</span>
+															</div>
+														</SelectItem>
+													))
+											)}
 										</SelectContent>
 									</Select>
 								</div>

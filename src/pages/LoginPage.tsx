@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useLoja } from "@/context/LojaContext";
-import  { AxiosError } from 'axios';
+import { AxiosError } from "axios";
 
 export default function LoginPage() {
 	const navigate = useNavigate();

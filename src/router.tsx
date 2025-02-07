@@ -22,6 +22,7 @@ import DriverListPage from "@/pages/protected/DriverListPage";
 import CreateDriverPage from "@/pages/protected/CreateDriverPage";
 import EditDriverPage from "@/pages/protected/EditDriverPage";
 import HistoryPage from "@/pages/protected/HistoryPage";
+import ConfigPage from "@/pages/protected/ConfigPage";
 
 const router = createBrowserRouter([
 	// Rotas Públicas
@@ -121,6 +122,14 @@ const router = createBrowserRouter([
 				element: (
 					<SidebarLayout>
 						<HistoryPage />
+					</SidebarLayout>
+				),
+			},
+			{
+				path: "configuracoes",
+				element: (
+					<SidebarLayout>
+						<ConfigPage />
 					</SidebarLayout>
 				),
 			},

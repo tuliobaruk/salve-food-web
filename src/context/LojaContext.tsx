@@ -22,8 +22,8 @@ interface Loja {
 	image: string;
 	rating: number | null;
 	deliveryTime: number | null;
-  horarioAbertura: string;
-  horarioFechamento: string;
+	horarioAbertura: string;
+	horarioFechamento: string;
 }
 
 interface LojaContextProps {

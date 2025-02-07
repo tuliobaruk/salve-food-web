@@ -5,7 +5,7 @@ import {
 	Bike,
 	Settings,
 	LogOut,
-	CircleHelp,
+	// CircleHelp,
 	PackageCheckIcon,
 } from "lucide-react";
 
@@ -36,17 +36,17 @@ export const topItems = [
 		url: "/historico",
 		icon: PackageCheckIcon,
 	},
-	{
-		title: "Ajuda",
-		url: "#",
-		icon: CircleHelp,
-	},
+	// {
+	// 	title: "Ajuda",
+	// 	url: "#",
+	// 	icon: CircleHelp,
+	// },
 ];
 
 export const footerItems = [
 	{
 		title: "Configurações",
-		url: "#",
+		url: "/configuracoes",
 		icon: Settings,
 	},
 	{

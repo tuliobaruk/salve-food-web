@@ -12,7 +12,10 @@ interface AuthResponse {
 }
 
 export const login = async (username: string, password: string): Promise<AuthResponse> => {
-	const response = await axios.post<AuthResponse>(`http://${API_ENDPOINT_URL}/api/auth/login`, { username, password });
+	const response = await axios.post<AuthResponse>(`http://${API_ENDPOINT_URL}/api/auth/login`, {
+		username,
+		password,
+	});
 	return response.data;
 };
 
