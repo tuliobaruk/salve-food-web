@@ -35,6 +35,7 @@
     "react-hook-form": "^7.54.2",
     "react-phone-number-input": "^3.4.11",
     "react-router-dom": "^7.1.1",
+    "recharts": "^2.15.1",
     "salve-food-web": "file:",
     "sonner": "^1.7.2",
     "tailwind-merge": "^2.6.0",
