@@ -27,16 +27,19 @@ import {
 	FileUploaderItem,
 } from "@/components/ui/file-upload";
 import { CreateStoreSchema } from "@/schema/zodSchemas";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
+import { Loja } from "@/context/LojaContext";
+import { SegmentoLoja } from "@/context/LojaContext";
 
 type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 
-interface CreateStoreFormProps {
-	segmentos: { id: string; nome: string; emoji: string }[];
+interface EditStoreFormProps {
+	store: Loja;
+	segmentos: SegmentoLoja[];
 	loading: boolean;
 	onSubmit: (values: CreateStoreFormValues) => void;
-}
+  }
 
 const estados: Record<string, string> = {
 	AC: "Acre",
@@ -86,9 +89,28 @@ const OPTIONS_TiposDePagamento: Option[] = [
 	{ label: "Pix", value: "PIX" },
 ];
 
-export default function CreateStoreForm({ segmentos, loading, onSubmit }: CreateStoreFormProps) {
+const DIAS_MAPEAMENTO: Record<string, string> = {
+	SEG: "Segunda-feira",
+	TER: "Terça-feira",
+	QUAR: "Quarta-feira",
+	QUI: "Quinta-feira",
+	SEX: "Sexta-feira",
+	SAB: "Sábado",
+	DOM: "Domingo",
+};
+
+const PAGAMENTOS_MAPEAMENTO: Record<string, string> = {
+	DINHEIRO: "Dinheiro",
+	CARTAO_DEBITO: "Cartão de Débito",
+	CARTAO_CREDITO: "Cartão de Crédito",
+	PIX: "Pix",
+};
+
+export default function EditStoreForm({ store, segmentos, loading, onSubmit  }: EditStoreFormProps) {
 	const [files, setFiles] = useState<File[] | null>(null);
 	const [cep, setCep] = useState<string>("");
+	const [diasSelecionados, setDiasSelecionados] = useState<Option[]>([]);
+	const [metodosSelecionados, setMetodosSelecionados] = useState<Option[]>([]);
 
 	const dropZoneConfig = {
 		maxFiles: 1,
@@ -130,23 +152,39 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 	const form = useForm<CreateStoreFormValues>({
 		resolver: zodResolver(CreateStoreSchema),
 		defaultValues: {
-			nome: "",
-			descricao: "",
-			segmentoLojaId: "",
-			diasFuncionamento: [],
-			tiposPagamento: [],
-			rua: "",
-			bairro: "",
-			numero: "",
-			cidade: "",
-			estado: "",
+			nome: store.nome,
+			descricao: store.descricao,
+			segmentoLojaId: String(store.segmentoLoja.id),
+			diasFuncionamento: store.diasFuncionamento,
+			tiposPagamento: store.tiposPagamento,
+			rua: store.rua,
+			bairro: store.bairro,
+			numero: store.numero,
+			cidade: store.cidade,
+			estado: store.estado,
 		},
 	});
+
+	useEffect(() => {
+		if (store.diasFuncionamento && store.tiposPagamento) {
+			const diasConvertidos = store.diasFuncionamento.map((dia: string) => ({
+				label: DIAS_MAPEAMENTO[dia] || dia,
+				value: dia,
+			}));
+			setDiasSelecionados(diasConvertidos);
+
+			const pagamentosConvertidos = store.tiposPagamento.map((tipo: string) => ({
+				label: PAGAMENTOS_MAPEAMENTO[tipo] || tipo,
+				value: tipo,
+			}));
+			setMetodosSelecionados(pagamentosConvertidos);
+		}
+	}, [store.diasFuncionamento, store.tiposPagamento]);
 
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
-				<div className="border-t border-gray-200 mt-8 pt-6">
+				<div className="mt-8 pt-6">
 					<h2 className="text-xl font-semibold mb-4">Dados Gerais</h2>
 				</div>
 
@@ -215,6 +253,7 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 							<FormLabel>Dias de Funcionamento</FormLabel>
 							<FormControl>
 								<MultipleSelector
+									value={diasSelecionados}
 									defaultOptions={OPTIONS_DiasDeFuncionamento}
 									onChange={(options) => field.onChange(options.map((option) => option.value))}
 									emptyIndicator={
@@ -240,6 +279,7 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 							<FormLabel>Tipos de pagamento</FormLabel>
 							<FormControl>
 								<MultipleSelector
+									value={metodosSelecionados}
 									defaultOptions={OPTIONS_TiposDePagamento}
 									onChange={(options) => field.onChange(options.map((option) => option.value))}
 									emptyIndicator={
@@ -255,12 +295,18 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 					)}
 				/>
 
+				<div className="border-t border-gray-200 mt-8 pt-6">
+					<h2 className="text-xl font-semibold mb-4">Imagem</h2>
+				</div>
+				<FormDescription>Imagem atual da loja</FormDescription>
+				<img src={store.image} alt={store.nome} className="rounded-lg w-64 h-64 object-cover" />
+
 				<FormField
 					control={form.control}
 					name="file"
 					render={() => (
 						<FormItem>
-							<FormLabel>Imagem</FormLabel>
+							<FormLabel>Alterar Imagem</FormLabel>
 							<FormControl>
 								<FileUploader
 									value={files}
@@ -290,7 +336,6 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 									</FileUploaderContent>
 								</FileUploader>
 							</FormControl>
-							<FormDescription>Uma Imagem para sua loja</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -420,7 +465,7 @@ export default function CreateStoreForm({ segmentos, loading, onSubmit }: Create
 					</div>
 				</div>
 
-				<Button type="submit">Enviar</Button>
+				<Button type="submit">Atualizar dados</Button>
 			</form>
 		</Form>
 	);

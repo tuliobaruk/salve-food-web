@@ -1,13 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from "react";
 
-interface SegmentoLoja {
-	id: number;
+export interface SegmentoLoja {
+	id: string;
 	nome: string;
 	emoji: string;
 }
 
-interface Loja {
+export interface Loja {
 	id: number;
 	nome: string;
 	descricao: string;
@@ -24,6 +24,8 @@ interface Loja {
 	deliveryTime: number | null;
 	horarioAbertura: string;
 	horarioFechamento: string;
+	diasFuncionamento: string[];
+	tiposPagamento: string[];
 }
 
 interface LojaContextProps {
