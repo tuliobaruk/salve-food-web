@@ -39,7 +39,7 @@ interface EditStoreFormProps {
 	segmentos: SegmentoLoja[];
 	loading: boolean;
 	onSubmit: (values: CreateStoreFormValues) => void;
-  }
+}
 
 const estados: Record<string, string> = {
 	AC: "Acre",
@@ -106,7 +106,7 @@ const PAGAMENTOS_MAPEAMENTO: Record<string, string> = {
 	PIX: "Pix",
 };
 
-export default function EditStoreForm({ store, segmentos, loading, onSubmit  }: EditStoreFormProps) {
+export default function EditStoreForm({ store, segmentos, loading, onSubmit }: EditStoreFormProps) {
 	const [files, setFiles] = useState<File[] | null>(null);
 	const [cep, setCep] = useState<string>("");
 	const [diasSelecionados, setDiasSelecionados] = useState<Option[]>([]);

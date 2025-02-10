@@ -10,4 +10,5 @@ export interface Item {
 	valor: number;
 	itemImage: string;
 	categoriaItem: CategoriaItem;
+	disponivel: boolean;
 }

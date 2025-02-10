@@ -1,20 +1,8 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/axiosConfig";
 import { toast } from "sonner";
+import { Item } from "@/types/Item";
 
-interface CategoriaItem {
-	id: number;
-	nome: string;
-}
-
-interface Item {
-	id: number;
-	nome: string;
-	descricao: string;
-	valor: number;
-	itemImage: string;
-	categoriaItem: CategoriaItem;
-}
 
 export function useItems(lojaId: number | undefined, pageSize: number) {
 	const [items, setItems] = useState<Item[]>([]);

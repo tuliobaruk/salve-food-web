@@ -25,31 +25,31 @@ type CreateStoreFormValues = z.infer<typeof CreateStoreSchema>;
 export default function ConfigPage() {
 	const { segmentos, loading } = useFetchSegmentos();
 	const { loja, setLoja } = useLoja();
-    const { user } = useAuth();
+	const { user } = useAuth();
 
 	const handleEditSubmit = async (values: CreateStoreFormValues) => {
 		try {
-		  if (!loja) return;
+			if (!loja) return;
 
-		  const formData = createFormDataStoreRequest(values);
+			const formData = createFormDataStoreRequest(values);
 
-		  const response = await axiosInstance.put(`/api/loja/${loja.id}`, formData, {
-			headers: {
-			  "Content-Type": "multipart/form-data",
-			},
-		  });
+			const response = await axiosInstance.put(`/api/loja/${loja.id}`, formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			});
 
-		  toast.success("Loja atualizada com sucesso!");
-		  console.log("Resposta da API:", response.data);
+			toast.success("Loja atualizada com sucesso!");
+			console.log("Resposta da API:", response.data);
 
-		  if (response.data) {
-			setLoja(response.data);
-		  }
+			if (response.data) {
+				setLoja(response.data);
+			}
 		} catch (error) {
-		  toast.error("Falha ao atualizar a loja, verifique o console para detalhes.");
-		  console.error("Erro ao atualizar a loja:", error);
+			toast.error("Falha ao atualizar a loja, verifique o console para detalhes.");
+			console.error("Erro ao atualizar a loja:", error);
 		}
-	  };
+	};
 
 	return (
 		<div className="w-5/6 mx-auto my-4">
@@ -64,21 +64,29 @@ export default function ConfigPage() {
 					<TabsTrigger value="notificacoes">Notificações</TabsTrigger>
 				</TabsList>
 				<TabsContent value="loja">
-                    {loja ? <EditStoreForm store={loja} segmentos={segmentos} loading={loading} onSubmit={handleEditSubmit} /> : "Não possui loja" }
+					{loja ? (
+						<EditStoreForm
+							store={loja}
+							segmentos={segmentos}
+							loading={loading}
+							onSubmit={handleEditSubmit}
+						/>
+					) : (
+						"Não possui loja"
+					)}
 				</TabsContent>
 				<TabsContent value="conta">
 					<Card>
 						<CardHeader>
 							<CardTitle>Conta</CardTitle>
 							<CardDescription>
-                            Faça alterações em sua conta aqui. Clique em salvar quando terminar.
+								Faça alterações em sua conta aqui. Clique em salvar quando terminar.
 							</CardDescription>
 						</CardHeader>
 						<CardContent className="space-y-2">
 							<div className="space-y-1">
 								<Label htmlFor="name">Nome</Label>
-								<Input id="name" defaultValue={user?.name
-                                } />
+								<Input id="name" defaultValue={user?.name} />
 							</div>
 							<div className="space-y-1">
 								<Label htmlFor="username">Email</Label>

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { TrashIcon, EditIcon } from "lucide-react";
-import { Card, CardContent, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardTitle, CardFooter } from "@/components/ui/card";
 import { Item } from "@/types/Item";
 
 interface CardItemProps {
@@ -36,10 +36,15 @@ export const CardItem = ({ item, onEdit, onRemove }: CardItemProps) => {
 				</div>
 			</div>
 			<CardContent className="bg-white p-4">
-				<CardTitle className="font-bold text-xl">{item.nome}</CardTitle>
-				<CardDescription className="text-sm text-gray-500">
-					{item.categoriaItem.nome}
-				</CardDescription>
+				<div className="flex justify-between items-center">
+					<span className="text-sm text-gray-500">{item.categoriaItem.nome}</span>
+					<span
+						className={`text-sm font-bold px-2 py-1 rounded-lg ${item.disponivel ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"}`}
+					>
+						{item.disponivel ? "Disponível" : "Indisponível"}
+					</span>
+				</div>
+				<CardTitle className="font-bold text-xl mt-2">{item.nome}</CardTitle>
 				<p className="text-gray-700 mt-2 line-clamp-2">{item.descricao}</p>
 
 				<CardFooter className="my-6">
