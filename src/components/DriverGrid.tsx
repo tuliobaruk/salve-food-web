@@ -13,7 +13,7 @@ export function DriverGrid({ drivers, onEdit, onRemove }: DriverGridProps) {
 	}
 
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 			{drivers.map((driver) => (
 				<CardDriver key={driver.id} driver={driver} onEdit={onEdit} onRemove={onRemove} />
 			))}
