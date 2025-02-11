@@ -18,9 +18,10 @@ interface CardItemProps {
 	item: Item;
 	onEdit: (id: number) => void;
 	onRemove: (id: number) => void;
+	onAvailability: (id: number) => void;
 }
 
-export const CardItem = ({ item, onEdit, onRemove }: CardItemProps) => {
+export const CardItem = ({ item, onEdit, onRemove, onAvailability }: CardItemProps) => {
 	return (
 		<Card className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
 			<div className="relative">
@@ -39,7 +40,8 @@ export const CardItem = ({ item, onEdit, onRemove }: CardItemProps) => {
 				<div className="flex justify-between items-center">
 					<span className="text-sm text-gray-500">{item.categoriaItem.nome}</span>
 					<span
-						className={`text-sm font-bold px-2 py-1 rounded-lg ${item.disponivel ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100"}`}
+						onClick={() => onAvailability(item.id)}
+						className={`relative z-20 text-sm font-bold px-2 py-1 rounded-lg cursor-pointer transition-colors duration-200 ${item.disponivel ? "text-green-600 bg-green-100 hover:bg-green-200" : "text-red-600 bg-red-100 hover:bg-red-200"}`}
 					>
 						{item.disponivel ? "Disponível" : "Indisponível"}
 					</span>
@@ -48,7 +50,7 @@ export const CardItem = ({ item, onEdit, onRemove }: CardItemProps) => {
 				<p className="text-gray-700 mt-2 line-clamp-2">{item.descricao}</p>
 
 				<CardFooter className="my-6">
-					<div className="absolute inset-0 z-20 flex justify-between items-end p-4">
+					<div className="absolute bottom-0 left-0 right-0 flex justify-between p-4 z-20">
 						<Button
 							variant="outline"
 							onClick={() => onEdit(item.id)}

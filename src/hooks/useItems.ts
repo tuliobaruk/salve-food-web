@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "@/api/axiosConfig";
 import { toast } from "sonner";
 import { Item } from "@/types/Item";
-
 
 export function useItems(lojaId: number | undefined, pageSize: number) {
 	const [items, setItems] = useState<Item[]>([]);
@@ -10,25 +9,40 @@ export function useItems(lojaId: number | undefined, pageSize: number) {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [totalPages, setTotalPages] = useState<number>(1);
 
-	useEffect(() => {
-		const fetchItems = async () => {
-			setLoading(true);
-			try {
-				const response = await axiosInstance.get(`/api/item/${lojaId}`, {
-					params: { page: currentPage, size: pageSize },
-				});
-				setItems(response.data.content);
-				setTotalPages(response.data.totalPages);
-			} catch (error) {
-				toast.error("Erro ao carregar os itens.");
-				console.error(error);
-			} finally {
-				setLoading(false);
-			}
-		};
+	const fetchItems = useCallback(async () => {
+		setLoading(true);
+		try {
+			const response = await axiosInstance.get(`/api/item/${lojaId}`, {
+				params: { page: currentPage, size: pageSize },
+			});
+			setItems(response.data.content);
+			setTotalPages(response.data.totalPages);
+		} catch (error) {
+			toast.error("Erro ao carregar os itens.");
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	}, [lojaId, currentPage, pageSize]);
 
+	useEffect(() => {
 		if (lojaId) fetchItems();
-	}, [currentPage, lojaId, pageSize]);
+	}, [fetchItems, lojaId]);
+
+	const updateAvailability = async (itemId: number) => {
+		try {
+			const item = items.find((i) => i.id === itemId);
+			if (!item) return;
+
+			await axiosInstance.put(`/api/item/${itemId}/disponibilidade`);
+
+			await fetchItems();
+			toast.success("Disponibilidade atualizada!");
+		} catch (error) {
+			toast.error("Erro ao atualizar disponibilidade");
+			console.error(error);
+		}
+	};
 
 	const removeItem = async (itemId: number) => {
 		try {
@@ -47,6 +61,8 @@ export function useItems(lojaId: number | undefined, pageSize: number) {
 		currentPage,
 		totalPages,
 		setCurrentPage,
+		fetchItems,
 		removeItem,
+		updateAvailability,
 	};
 }

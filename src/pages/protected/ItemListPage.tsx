@@ -11,15 +11,19 @@ export default function ItemListPage() {
 	const navigate = useNavigate();
 	const { loja } = useLoja();
 	const pageSize = 8;
-	const { items, loading, currentPage, totalPages, setCurrentPage, removeItem } = useItems(
-		loja?.id,
-		pageSize,
-	);
+	const {
+		items,
+		loading,
+		currentPage,
+		totalPages,
+		setCurrentPage,
+		removeItem,
+		updateAvailability,
+	} = useItems(loja?.id, pageSize);
 
 	const handleEdit = (itemId: number) => navigate(`/editar-item/${itemId}`);
 	const handleCreateItem = () => navigate("/criar-item");
 
-	// TODO: Se der tempo implementar caching
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-start bg-muted p-6 md:p-10">
 			<div className="w-full max-w-7xl relative space-y-6">
@@ -36,7 +40,12 @@ export default function ItemListPage() {
 					<Loading />
 				) : (
 					<>
-						<ItemGrid items={items} onEdit={handleEdit} onRemove={removeItem} />
+						<ItemGrid
+							items={items}
+							onEdit={handleEdit}
+							onRemove={removeItem}
+							onAvailability={updateAvailability}
+						/>
 						{totalPages > 1 && (
 							<Pagination
 								currentPage={currentPage}
