@@ -60,8 +60,8 @@ export default function ConfigPage() {
 				<TabsList className="grid w-full grid-cols-4">
 					<TabsTrigger value="loja">Dados da Loja</TabsTrigger>
 					<TabsTrigger value="conta">Dados da Conta</TabsTrigger>
-					<TabsTrigger value="pagamentos">Pagamentos</TabsTrigger>
-					<TabsTrigger value="notificacoes">Notificações</TabsTrigger>
+					{/* <TabsTrigger value="pagamentos">Pagamentos</TabsTrigger>
+					<TabsTrigger value="notificacoes">Notificações</TabsTrigger> */}
 				</TabsList>
 				<TabsContent value="loja">
 					{loja ? (
@@ -98,7 +98,7 @@ export default function ConfigPage() {
 						</CardFooter>
 					</Card>
 				</TabsContent>
-				<TabsContent value="pagamentos">
+				{/* <TabsContent value="pagamentos">
 					<div className="flex items-center min-h-screen px-4 py-12 sm:px-6 md:px-8 lg:px-12 xl:px-16 mx-auto">
 						<h1 className="text-4xl font-bold tracking-tighter sm:text-5xl animate-bounce">
 							Placeholder configurações de recebimento de pagamentos
@@ -111,7 +111,7 @@ export default function ConfigPage() {
 							Placeholder configurações de notificações
 						</h1>
 					</div>
-				</TabsContent>
+				</TabsContent> */}
 			</Tabs>
 		</div>
 	);

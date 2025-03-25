@@ -56,7 +56,7 @@ export default function HomePage() {
 							<Link to="/login">
 								<Button className="px-6 py-3 text-lg">Entrar no Portal</Button>
 							</Link>
-							<Link to="/signup">
+							<Link to="/singup">
 								<Button className="px-6 py-3 bg-orange-500 text-white text-lg hover:bg-orange-400">
 									Cadastre sua loja
 								</Button>

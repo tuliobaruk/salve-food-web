@@ -51,7 +51,7 @@ export function LoginForm({
 								<div className="flex items-center">
 									<Label htmlFor="password">Senha</Label>
 									<a
-										href="#"
+										href={"http://10.31.89.246:9080/realms/salve/login-actions/reset-credentials?client_id=salve"}
 										className="ml-auto text-sm underline-offset-2 hover:underline"
 										tabIndex={-1}
 									>

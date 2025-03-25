@@ -137,7 +137,6 @@ export default function CreateItemForm({ categorias, loading, onSubmit }: Create
 					name="valor"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Valor</FormLabel>
 							<FormControl>
 								<MoneyInput
 									form={form}
